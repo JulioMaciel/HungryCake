@@ -1,0 +1,14 @@
+
+subscribeFeed()
+unsubscribeFeed()
+
+
+topic, user can defines (create or select) when subscribe
+
+get icon from pages when someone first connect to the domain
+
+
+
+todo:
+
+map FeedForListDto, FeedForDetailedDto, feedCreateDto, FeedSelectDto
