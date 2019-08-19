@@ -1,0 +1,30 @@
+{
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "obj": true,
+        "HungryCake.API/obj": true,
+        "HungryCake.API/bin": true,
+        ".vscode": true,
+        ".editorconfig": true,
+        "HungryCake-SPA/.editorconfig": true,
+        "HungryCake-SPA/browserslist": true,
+        "HungryCake-SPA/karma.conf.js": true,
+        "HungryCake-SPA/package-lock.json": true,
+        "HungryCake-SPA/README.md": true,
+        "HungryCake-SPA/tsconfig.app.json": true,
+        "HungryCake-SPA/tsconfig.json": true,
+        "HungryCake-SPA/tsconfig.spec.json": true,
+        "HungryCake-SPA/tslint.json": true,
+        "HungryCake-SPA/e2e": true,
+        "HungryCake-SPA\\src/polyfills.ts": true,
+        "HungryCake-SPA\\src/test.ts": true,
+        "HungryCake-SPA/node_modules": true,
+        "HungryCake-SPA\\src\\app/app.component.spec.ts": true,
+        "HungryCake-SPA\\src/favicon.ico": true
+    },
+    "explorerExclude.backup": null
+}

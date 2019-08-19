@@ -51,7 +51,7 @@ namespace HungryCake.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateUser(int id, UserUpdateDto userForUpdateDto)
+        public async Task<IActionResult> UpdateUser(int id, UserEditDto userForUpdateDto)
         {
             if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();

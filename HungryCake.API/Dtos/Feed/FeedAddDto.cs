@@ -4,7 +4,7 @@ using HungryCake.API.Models;
 
 namespace HungryCake.API.Dtos
 {
-    public class FeedCreateDto
+    public class FeedAddDto
     {
         [Required]
         public string FeedName { get; set; }
@@ -15,7 +15,7 @@ namespace HungryCake.API.Dtos
         public string Topic { get; set; }
         public string Language { get; set; }
 
-        public FeedCreateDto() 
+        public FeedAddDto() 
         {
             Created = DateTime.Now;
         }

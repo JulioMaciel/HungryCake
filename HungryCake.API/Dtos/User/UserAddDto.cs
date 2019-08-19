@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace HungryCake.API.Dtos
 {
-    public class UserRegisterDto
+    public class UserAddDto
     {
         [Required]
         public string Username { get; set; }
@@ -14,7 +14,7 @@ namespace HungryCake.API.Dtos
         public DateTime Created { get; set; }
         public DateTime LastActive { get; set; }
 
-        public UserRegisterDto() 
+        public UserAddDto() 
         {
             Created = DateTime.Now;
             LastActive = DateTime.Now;

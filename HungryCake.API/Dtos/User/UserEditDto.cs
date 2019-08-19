@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace HungryCake.API.Dtos
 {
-    public class UserUpdateDto
+    public class UserEditDto
     {
         
     }

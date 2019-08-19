@@ -9,13 +9,17 @@ namespace HungryCake.API.Helpers
     {
         public MapperProfiles()
         {
-            CreateMap<UserUpdateDto, User>();
-            CreateMap<UserRegisterDto, User>();
+            CreateMap<UserAddDto, User>();
+            CreateMap<UserEditDto, User>();
+            CreateMap<User, UserListDto>();
+            CreateMap<User, UserDetailDto>();
 
-            CreateMap<FeedListDto, Feed>();
-            CreateMap<FeedDetailDto, Feed>();
-            CreateMap<FeedCreateDto, Feed>();
+            CreateMap<FeedAddDto, Feed>();
+            CreateMap<FeedEditDto, Feed>();
+            CreateMap<Feed, FeedListDto>();
+            CreateMap<Feed, FeedDetailDto>();
             CreateMap<FeedsSelectDto, Feed>();
+            
         }
     }
 }

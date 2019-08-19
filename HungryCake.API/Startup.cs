@@ -8,6 +8,7 @@ using AutoMapper;
 using HungryCake.API.Data;
 using HungryCake.API.Helpers;
 using HungryCake.API.Models;
+using HungryCakeApp.API.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -81,20 +82,23 @@ namespace HungryCake.API
                 {
                     opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
                 }); ;
+
             Mapper.Reset();
             var mappingConfig = new MapperConfiguration(mc =>
             {
                 mc.AddProfile(new MapperProfiles());
             });
             IMapper mapper = mappingConfig.CreateMapper();
+
+            services.AddCors();
             services.AddSingleton(mapper);
-            // services.AddAutoMapper(); // obsolete
             services.AddScoped<ICakeRepository, CakeRepository>();
             services.AddScoped<LogUserActivity>();
+            services.AddTransient<Seed>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, Seed seeder)
         {
             if (env.IsDevelopment())
             {
@@ -118,7 +122,17 @@ namespace HungryCake.API
                 // app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            seeder.SeedUsers();
+            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+            app.UseAuthentication();
+            // app.UseDefaultFiles();
+            // app.UseStaticFiles();
+            // app.UseMvc(routes => {
+            //     routes.MapSpaFallbackRoute(
+            //         name: "spa-fallback",
+            //         defaults: new { controller = "Fallback", action = "Index" }
+            //     );
+            // });
             app.UseMvc();
         }
     }

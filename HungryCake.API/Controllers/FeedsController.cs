@@ -17,12 +17,12 @@ namespace HungryCake.API.Controllers
     [ServiceFilter(typeof(LogUserActivity))]
     [Route("api/[controller]")]
     [ApiController]
-    public class FeedController : ControllerBase
+    public class FeedsController : ControllerBase
     {
         private readonly ICakeRepository _repo;
         private readonly IMapper _mapper;
         private readonly UserManager<User> _userManager;
-        public FeedController(ICakeRepository repo, IMapper mapper, UserManager<User> userManager)
+        public FeedsController(ICakeRepository repo, IMapper mapper, UserManager<User> userManager)
         {
             _userManager = userManager;
             _mapper = mapper;
@@ -30,7 +30,7 @@ namespace HungryCake.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateFeed(int userId, FeedCreateDto feedCreateDto)
+        public async Task<IActionResult> CreateFeed(int userId, FeedAddDto feedCreateDto)
         {
             var sender = await _repo.GetUser(userId.ToString());
 

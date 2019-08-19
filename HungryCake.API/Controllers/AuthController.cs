@@ -35,7 +35,7 @@ namespace HungryCake.API.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register(UserRegisterDto userForRegisterDto)
+        public async Task<IActionResult> Register(UserAddDto userForRegisterDto)
         {
             var userToCreate = _mapper.Map<User>(userForRegisterDto);
 
