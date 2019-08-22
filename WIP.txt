@@ -1,73 +1,47 @@
 
+TODO
+* add category
+* list categories
 
-subscribeFeed()
-unsubscribeFeed()
+TODO
+* add rss
+* show all rss (in columns) on feeds page
 
+TODO
+* page to user sign rss
+* show only rss signed by user
 
-topic, user can defines (create or select) when subscribe
+tbl Topic {
+name,
+parent
+}
+columnsview will always show the most especific signed, them the more generic minus the especifics
 
-get icon from pages when someone first connect to the domain
-
-
-
-todo:
-
-map FeedForListDto, FeedForDetailedDto, feedCreateDto, FeedSelectDto
-
-Log table (userID, actionType, obj, when)
-
-
----------------------------------------
-
-DEVELOPER - C#/.NET CORE
-You need to have experience with:-
-
-Able to create and develop complexes logics
-.NET backend application development;
-Experience with .NET ecosystem within a web / online environment;
-Experiencing developing and working within enterprise-level software projects;
-Knowledge of microservice architecture and the creation of JSON API endpoints;
-Experience building software that is essentially an API backend which frontend apps will connect;
-
-& someone with the following background:
-C#
-MVC
-SQL
-Entityframework 
-Angular2+ - Advantage
-
-We accept students
-Sponsorship may be available for the right person
-it@nextlogistics.com.au
+TODO
+* load topics when adding rss
+* admin page: show topic tree until rss
+* let user sign topics
+* show signed topics by user
 
 
+feed: rssFeed, topicFeed (+ subtopic), redditFeed*, htmlFeed**, twitFeed***, instaFeed****
 
-1-Can DateTimes be null?
+reddit pode ter a opção de formato (orderby) levando em conta a pontuação
 
-2-What is the difference between Finalize() and Dispose()?
+tbl relevance{
+userId
+target: { feed, topic, word}
+level: 0/5 [not set = 3]
+}
 
-3-How is the using() pattern useful? What is IDisposable? How does it support deterministic finalization?
+update .ico from domain every month
 
-4-What are PDBs? Where must they be located for debugging to work?
-
-5-What is the difference between a Debug and Release build? Is there a significant speed difference? Why or why not?
-
-6- Contrast the use of an abstract base class against an interface?
-
-7- What is the difference between a.Equals(b) and a == b?
-
-8- What is boxing?
-
-9-What is the difference between: catch(Exception e){throw e;} and catch(Exception e){throw;}
-
-10-What is the <machinekey> element and what two ASP.NET technologies is it used for?
-
-11-What is the difference between tempdata , viewdata and viewbag?
-
-12-What is the difference between string and StringBuilder in c#?
-
-13- What is the difference between a struct and a class in C#?
-
-14-What is the difference between “continue” and “break” statements in C#?
-
-15-What is the difference between constant and read only in c#?
+API must read the rss each X minutes, and store the value in memory... it will reduce the quantity of calls based on user
+- if feed is signed by any user, check updates
+- X = avarage distance period of news in a same week day; ***
+- otherwise, 15 min default
+{
+g1 html = 322.78 KB per read
+omelete = 2.32 MB
+gizmodo feed = 57.17 KB
+}

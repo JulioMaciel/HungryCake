@@ -1,3 +1,25 @@
-<p>
-  nav works!
-</p>
+<nav class="navbar navbar-expand-md navbar-dark bg-primary">
+  <div class="container">
+  <a class="navbar-brand" [routerLink]="['/home']">The Cake</a>
+    
+    <ul *ngIf="loggedIn()" class="navbar-nav mr-auto">
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" [routerLink]="['/feeds']" >Feeds</a>
+      </li>
+      <li *appHasRole="['Admin']" class="nav-item" routerLinkActive="active">
+        <a class="nav-link" [routerLink]="['/feed/add']">Add Feed</a>
+      </li>
+      <li *appHasRole="['Admin']" class="nav-item" routerLinkActive="active">
+        <a class="nav-link" [routerLink]="['/admin']">Admin</a>
+      </li>
+    </ul>
+
+    <ul class="navbar-nav mr-auto float-right">
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link btnLogout" (click)="logout()"><i class="fa fa-sign-out"></i> Logout</a>
+      </li>
+    </ul>
+
+  </div>
+
+</nav>

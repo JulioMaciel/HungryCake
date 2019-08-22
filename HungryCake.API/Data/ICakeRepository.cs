@@ -11,8 +11,8 @@ namespace HungryCake.API.Data
         void Delete<T>(T entity) where T: class;
         Task<bool> SaveAll();        
         Task<PagedList<User>> GetUsers(UserParams userParams);
-        Task<User> GetUser(string id);
-        Task<PagedList<Feed>> GetFeeds(FeedParams feedParams);
-        Task<Feed> GetFeed(string id);
+        Task<User> GetUser(int id);
+        // Task<PagedList<Feed>> GetFeeds(FeedParams feedParams);
+        // Task<Feed> GetFeed(int id);
     }
 }

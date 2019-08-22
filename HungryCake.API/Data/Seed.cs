@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using HungryCake.API.Data;
 using HungryCake.API.Models;
 using Microsoft.AspNetCore.Identity;
 using Newtonsoft.Json;
@@ -12,12 +13,15 @@ namespace HungryCakeApp.API.Data
         // private readonly DataContext _context;
         private readonly UserManager<User> _userManager;
         private readonly RoleManager<Role> _roleManager;
+        private readonly ICakeRepository _repo;
 
-        public Seed(UserManager<User> userManager, RoleManager<Role> roleManager)
+
+        public Seed(UserManager<User> userManager, RoleManager<Role> roleManager, ICakeRepository repo)
         {
             _roleManager = roleManager;
             _userManager = userManager;
             // _context = context;
+            _repo = repo;
         }
 
         public void SeedUsers()
@@ -47,7 +51,17 @@ namespace HungryCakeApp.API.Data
             {
                 var admin = _userManager.FindByNameAsync("Admin").Result;
                 _userManager.AddToRolesAsync(admin, new[] { "Admin" }).Wait();
-            }
+            }            
+        }
+
+        public void SeedCategory()
+        {
+            var cat = new Category();
+            cat.English = "General";
+            cat.Portuguese = "Geral";
+
+            _repo.Add(cat);
+            _repo.SaveAll();
         }
     }
 }

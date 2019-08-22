@@ -31,7 +31,7 @@ namespace HungryCake.API.Data
             return await _context.SaveChangesAsync() > 0;
         }
 
-        public async Task<User> GetUser(string id)
+        public async Task<User> GetUser(int id)
         {
             var query = _context.Users.AsQueryable();
 
@@ -61,46 +61,30 @@ namespace HungryCake.API.Data
             return await PagedList<User>.CreateAsync(users, userParams.PageNumber, userParams.PageSize);
         }
 
-        public async Task<Feed> GetFeed(string id)
-        {
-            var query = _context.Feeds.AsQueryable();
-
-             var feed = await query.FirstOrDefaultAsync(u => u.Id.Equals(id));
-
-            return feed;
-        }
-
-        public async Task<PagedList<Feed>> GetFeeds(FeedParams feedParams)
-        {
-            var feeds = _context.Feeds.OrderByDescending(u => u.FeedName).AsQueryable();
-
-            if (!string.IsNullOrEmpty(feedParams.OrderBy))
-            {
-                switch (feedParams.OrderBy)
-                {
-                    case "created":
-                    feeds = feeds.OrderByDescending(u => u.Created);
-                    break;
-                }
-            }
-
-            return await PagedList<Feed>.CreateAsync(feeds, feedParams.PageNumber, feedParams.PageSize);
-        }
-
-        // public async Task<IAsyncResult> LinkUserToFeed(string userId, string feedId)
+        // public async Task<Feed> GetFeed(int id)
         // {
-        //     var user = await GetUser(userId);
-        //     var feed = await GetFeed(feedId);
+        //     var query = _context.Feeds.AsQueryable();
 
-        //     var userFeed = new UserFeed(user, feed);
+        //      var feed = await query.FirstOrDefaultAsync(u => u.Id.Equals(id));
 
-        //     user.UserFeeds.Add(userFeed);
+        //     return feed;
+        // }
 
-        //     if(await SaveAll())
-        //         return NoContent();
+        // public async Task<PagedList<Feed>> GetFeeds(FeedParams feedParams)
+        // {
+        //     var feeds = _context.Feeds.OrderByDescending(u => u.Name).AsQueryable();
 
-        //     return BadRequest("Could not set photo to main");
+        //     if (!string.IsNullOrEmpty(feedParams.OrderBy))
+        //     {
+        //         switch (feedParams.OrderBy)
+        //         {
+        //             case "created":
+        //             feeds = feeds.OrderByDescending(u => u.Created);
+        //             break;
+        //         }
+        //     }
 
+        //     return await PagedList<Feed>.CreateAsync(feeds, feedParams.PageNumber, feedParams.PageSize);
         // }
 
     }

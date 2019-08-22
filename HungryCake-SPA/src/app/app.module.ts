@@ -16,7 +16,7 @@ import { AuthGuard } from './_guards/auth.guard';
 import { UserService } from './_services/user.service';
 import { AdminService } from './_services/admin.service';
 import { ErrorInterceptorProvider } from './_services/error.interceptor';
-import { RolesModalComponent } from './admin/roles-modal/roles-modal.component';
+import { RolesModalComponent } from './users/roles-modal/roles-modal.component';
 import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
 import { HasRoleDirective } from './_directives/hasRole.directive';
 import { OverlayModule } from '@angular/cdk/overlay';

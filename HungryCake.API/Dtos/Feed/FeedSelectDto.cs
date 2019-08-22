@@ -5,6 +5,6 @@ namespace HungryCake.API.Dtos
 {
     public class FeedsSelectDto
     {
-        public string[] SelectedFeedIds { get; set; }
+        public int[] SelectedFeedIds { get; set; }
     }
 }

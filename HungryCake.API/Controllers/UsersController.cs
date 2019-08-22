@@ -43,7 +43,7 @@ namespace HungryCake.API.Controllers
         [HttpGet("{id}", Name = "GetUser")]
         public async Task<IActionResult> GetUser(int id)
         {
-            var user = await _repo.GetUser(id.ToString());
+            var user = await _repo.GetUser(id);
 
             var userToReturn = _mapper.Map<UserDetailDto>(user);
 
@@ -56,7 +56,7 @@ namespace HungryCake.API.Controllers
             if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
-            var userFromRepo = await _repo.GetUser(id.ToString());
+            var userFromRepo = await _repo.GetUser(id);
 
             _mapper.Map(userForUpdateDto, userFromRepo);
 

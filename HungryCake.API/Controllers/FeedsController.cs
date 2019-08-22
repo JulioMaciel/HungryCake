@@ -32,12 +32,12 @@ namespace HungryCake.API.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateFeed(int userId, FeedAddDto feedCreateDto)
         {
-            var sender = await _repo.GetUser(userId.ToString());
+            var sender = await _repo.GetUser(userId);
 
-            if (sender.Id != User.FindFirst(ClaimTypes.NameIdentifier).Value)
+            if (sender.Id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
-            feedCreateDto.Creator.Id = userId.ToString();
+            feedCreateDto.Creator.Id = userId;
 
             var feed = _mapper.Map<Feed>(feedCreateDto);
 
@@ -49,50 +49,50 @@ namespace HungryCake.API.Controllers
             throw new Exception("Creating the feed failed on save");
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetFeeds([FromQuery]FeedParams feedParams)
-        {
-            var feeds = await _repo.GetFeeds(feedParams);
+        // [HttpGet]
+        // public async Task<IActionResult> GetFeeds([FromQuery]FeedParams feedParams)
+        // {
+        //     var feeds = await _repo.GetFeeds(feedParams);
 
-            var feedsToReturn = _mapper.Map<IEnumerable<FeedListDto>>(feeds);
+        //     var feedsToReturn = _mapper.Map<IEnumerable<FeedListDto>>(feeds);
 
-            Response.AddPagination(feeds.CurrentPage, feeds.PageSize, feeds.TotalCount, feeds.TotalPages);
+        //     Response.AddPagination(feeds.CurrentPage, feeds.PageSize, feeds.TotalCount, feeds.TotalPages);
 
-            return Ok(feedsToReturn);
-        }
+        //     return Ok(feedsToReturn);
+        // }
 
-        [HttpGet("{id}", Name = "GetFeed")]
-        public async Task<IActionResult> GetFeed(int id)
-        {
-            var feed = await _repo.GetFeed(id.ToString());
+        // [HttpGet("{id}", Name = "GetFeed")]
+        // public async Task<IActionResult> GetFeed(int id)
+        // {
+        //     var feed = await _repo.GetFeed(id);
 
-            var feedToReturn = _mapper.Map<FeedDetailDto>(feed);
+        //     var feedToReturn = _mapper.Map<FeedDetailDto>(feed);
 
-            return Ok(feedToReturn);
-        }
+        //     return Ok(feedToReturn);
+        // }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateFeed(int id)
-        {
-            if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
-                return Unauthorized();
+        // [HttpPut("{id}")]
+        // public async Task<IActionResult> UpdateFeed(int id)
+        // {
+        //     if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+        //         return Unauthorized();
 
-            var feedFromRepo = await _repo.GetFeed(id.ToString());
+        //     var feedFromRepo = await _repo.GetFeed(id);
 
-            // _mapper.Map(feedForUpdateDto, feedFromRepo);
+        //     // _mapper.Map(feedForUpdateDto, feedFromRepo);
 
-            if (await _repo.SaveAll())
-                return NoContent();
+        //     if (await _repo.SaveAll())
+        //         return NoContent();
 
-            throw new Exception($"Updating feed {id} failed to save");
-        }
+        //     throw new Exception($"Updating feed {id} failed to save");
+        // }
 
         [HttpPost("{id}")]
         public async Task<IActionResult> DeleteFeed(int id)
         {
-            var feedFromRepo = await _repo.GetFeed(id.ToString());
+            // var feedFromRepo = await _repo.GetFeed(id);
 
-            _repo.Delete(feedFromRepo);
+            // _repo.Delete(feedFromRepo);
 
             if (await _repo.SaveAll())
                 return NoContent();
@@ -100,64 +100,33 @@ namespace HungryCake.API.Controllers
             throw new Exception("Error deleting the feed");
         }
 
-        [HttpPost("{id}")]
-        public async Task<IActionResult> DeactiveFeed(int id)
-        {
-            var feedFromRepo = await _repo.GetFeed(id.ToString());
+        // [HttpPost("{id}")]
+        // public async Task<IActionResult> DeactiveFeed(int id)
+        // {
+        //     var feedFromRepo = await _repo.GetFeed(id);
 
-            feedFromRepo.IsActive = false;
+        //     feedFromRepo.IsActive = false;
 
-            if (await _repo.SaveAll())
-                return NoContent();
+        //     if (await _repo.SaveAll())
+        //         return NoContent();
 
-            throw new Exception("Error deactivating the feed");
-        }
+        //     throw new Exception("Error deactivating the feed");
+        // }
 
-        [HttpPost("{id}")]
-        public async Task<IActionResult> ActivateFeed(int id)
-        {
-            var feedFromRepo = await _repo.GetFeed(id.ToString());
+        // [HttpPost("{id}")]
+        // public async Task<IActionResult> ActivateFeed(int id)
+        // {
+        //     var feedFromRepo = await _repo.GetFeed(id);
 
-            feedFromRepo.IsActive = true;
+        //     feedFromRepo.IsActive = true;
 
-            if (await _repo.SaveAll())
-                return NoContent();
+        //     if (await _repo.SaveAll())
+        //         return NoContent();
 
-            throw new Exception("Error activating the feed");
-        }
+        //     throw new Exception("Error activating the feed");
+        // }
 
-        [HttpPost]
-        public async Task<IActionResult> SelectFeeds(int userId, FeedsSelectDto feedSelectDto)
-        {
-            var user = await _userManager.FindByIdAsync(userId.ToString());
 
-            // var selectedFeeds =  new List<Feed>();
-
-            foreach (var feedId in feedSelectDto.SelectedFeedIds)
-            {
-                var feedFromRepo = await _repo.GetFeed(feedId.ToString());
-
-                var userFeed = new UserFeed(); // (user, feedFromRepo)
-                userFeed.User = user;
-                userFeed.Feed = feedFromRepo;
-
-                if (!user.UserFeeds.Contains(userFeed))
-                    user.UserFeeds.Add(userFeed);
-                // selectedFeeds.Add(feedFromRepo);
-            }
-
-            var removedFeeds =  user.UserFeeds.Where(f => !feedSelectDto.SelectedFeedIds.Contains(f.FeedId));
-
-            foreach (var removedFeed in removedFeeds)
-            {
-                user.UserFeeds.Remove(removedFeed);
-            }
-
-            if(await _repo.SaveAll())
-                return NoContent();
-
-            throw new Exception("Error linking the user to the feeds");
-        }
 
     }
 }

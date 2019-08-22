@@ -13,7 +13,7 @@ namespace HungryCake.API.Helpers
         {
             var resultContext = await next();
 
-            var userId = resultContext.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var userId = int.Parse(resultContext.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
             var repo = resultContext.HttpContext.RequestServices.GetService<ICakeRepository>();
             var user = await repo.GetUser(userId);
             user.LastActive = DateTime.Now;

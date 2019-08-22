@@ -14,11 +14,11 @@ namespace HungryCake.API.Helpers
             CreateMap<User, UserListDto>();
             CreateMap<User, UserDetailDto>();
 
-            CreateMap<FeedAddDto, Feed>();
-            CreateMap<FeedEditDto, Feed>();
-            CreateMap<Feed, FeedListDto>();
-            CreateMap<Feed, FeedDetailDto>();
-            CreateMap<FeedsSelectDto, Feed>();
+            // CreateMap<FeedAddDto, Feed>();
+            // CreateMap<FeedEditDto, Feed>();
+            // CreateMap<Feed, FeedListDto>();
+            // CreateMap<Feed, FeedDetailDto>();
+            // CreateMap<FeedsSelectDto, Feed>();
             
         }
     }

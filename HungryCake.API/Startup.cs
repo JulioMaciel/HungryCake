@@ -123,6 +123,7 @@ namespace HungryCake.API
             }
 
             seeder.SeedUsers();
+            seeder.SeedCategory();
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             app.UseAuthentication();
             // app.UseDefaultFiles();

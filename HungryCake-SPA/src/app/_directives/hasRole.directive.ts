@@ -3,7 +3,6 @@ import { AuthService } from '../_services/auth.service';
 
 @Directive({
   selector: '[appHasRole]'
-  // * after selector means that change it to <ng-template>
 })
 export class HasRoleDirective implements OnInit {
   @Input() appHasRole: string[];

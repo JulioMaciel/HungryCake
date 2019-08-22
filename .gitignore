@@ -48,3 +48,5 @@ bin
 obj
 *.db
 .vs
+
+WIP.txt

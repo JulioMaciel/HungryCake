@@ -1,3 +1,92 @@
-<p>
-  feed-add-edit works!
-</p>
+<form class="m-5" [formGroup]="feedForm" (ngSubmit)="addFeed()">
+  <div class="form-group row">
+    <label class="col-sm-2 col-form-label">Feed Name</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" placeholder="Feed Name" 
+      formControlName="feedName" 
+      [ngClass]="{ 'is-invalid': registerForm.get('feedName').errors && 
+      feedForm.get('feedName').touched }" />
+      <div class="invalid-feedback">Feed Name required</div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-sm-2 col-form-label">Url Site</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" placeholder="www.example.com" 
+      formControlName="urlSite" 
+      [ngClass]="{ 'is-invalid': registerForm.get('urlSite').errors && 
+      feedForm.get('urlSite').touched }" />
+      <div class="invalid-feedback">Url Site required</div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-sm-2 col-form-label">Url Feed</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" placeholder="www.example.com/feed" 
+      formControlName="urlFeed" 
+      [ngClass]="{ 'is-invalid': registerForm.get('urlFeed').errors && 
+      feedForm.get('urlFeed').touched }" />
+      <div class="invalid-feedback">Url Feed required</div>
+    </div>
+  </div>
+  <fieldset class="form-group">
+    <div class="row">
+      <legend class="col-form-label col-sm-2 pt-0">Language</legend>
+      <div class="col-sm-10">
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="gridRadios-language"
+            value="en-us" formControlName="language" checked />
+          <label class="form-check-label"> English </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="gridRadios-language"
+            value="pt-br" formControlName="language" />
+          <label class="form-check-label"> Portuguese </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="gridRadios-language"
+            value="sp-sp" formControlName="language" />
+          <label class="form-check-label"> Spanish </label>
+        </div>
+      </div>
+    </div>
+  </fieldset>
+  <fieldset class="form-group">
+    <div class="row">
+      <legend class="col-form-label col-sm-2 pt-0">Topic</legend>
+      <div class="col-sm-10">
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="gridRadios-topic"
+            value="entertainment" formControlName="topic" checked />
+          <label class="form-check-label"> Entertainment </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="gridRadios-topic"
+            value="football" formControlName="topic" />
+          <label class="form-check-label"> Football </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="gridRadios-topic"
+            value="science" formControlName="topic" />
+          <label class="form-check-label"> Science </label>
+        </div>
+      </div>
+    </div>
+  </fieldset>
+  <div class="form-group row">
+    <div class="col-sm-2">Status</div>
+    <div class="col-sm-10">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" checked />
+        <label class="form-check-label"> Activated </label>
+      </div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <div class="col-sm-10">
+      <button type="submit" [disabled]="!registerForm.valid" class="btn btn-primary" >
+        Add Feed
+      </button>
+    </div>
+  </div>
+</form>
