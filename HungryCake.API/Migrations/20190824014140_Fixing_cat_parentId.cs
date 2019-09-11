@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace HungryCake.API.Migrations
 {
-    public partial class RestructuringDB : Migration
+    public partial class Fixing_cat_parentId : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -54,7 +54,7 @@ namespace HungryCake.API.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    ParentIdId = table.Column<int>(nullable: true),
+                    ParentId = table.Column<int>(nullable: true),
                     English = table.Column<string>(nullable: false),
                     Portuguese = table.Column<string>(nullable: true),
                     Spanish = table.Column<string>(nullable: true)
@@ -63,8 +63,8 @@ namespace HungryCake.API.Migrations
                 {
                     table.PrimaryKey("PK_Categories", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Categories_Categories_ParentIdId",
-                        column: x => x.ParentIdId,
+                        name: "FK_Categories_Categories_ParentId",
+                        column: x => x.ParentId,
                         principalTable: "Categories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -407,9 +407,9 @@ namespace HungryCake.API.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Categories_ParentIdId",
+                name: "IX_Categories_ParentId",
                 table: "Categories",
-                column: "ParentIdId");
+                column: "ParentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_FeedsHtml_CategoryId",

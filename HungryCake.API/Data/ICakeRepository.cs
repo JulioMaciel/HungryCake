@@ -14,5 +14,7 @@ namespace HungryCake.API.Data
         Task<User> GetUser(int id);
         // Task<PagedList<Feed>> GetFeeds(FeedParams feedParams);
         // Task<Feed> GetFeed(int id);
+        Task<IEnumerable<Category>> GetCategories();
+        Task<Category> GetCategory(int id);
     }
 }

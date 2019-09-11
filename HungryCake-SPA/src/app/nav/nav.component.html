@@ -7,7 +7,13 @@
         <a class="nav-link" [routerLink]="['/feeds']" >Feeds</a>
       </li>
       <li *appHasRole="['Admin']" class="nav-item" routerLinkActive="active">
-        <a class="nav-link" [routerLink]="['/feed/add']">Add Feed</a>
+        <a class="nav-link" [routerLink]="['/rss/add']">Add RSS</a>
+      </li>
+      <li *appHasRole="['Admin']" class="nav-item" routerLinkActive="active">
+        <a class="nav-link" [routerLink]="['/categories']">Categories</a>
+      </li>
+      <li *appHasRole="['Admin']" class="nav-item" routerLinkActive="active">
+        <a class="nav-link" [routerLink]="['/tree-categories']">Tree Categories</a>
       </li>
       <li *appHasRole="['Admin']" class="nav-item" routerLinkActive="active">
         <a class="nav-link" [routerLink]="['/admin']">Admin</a>

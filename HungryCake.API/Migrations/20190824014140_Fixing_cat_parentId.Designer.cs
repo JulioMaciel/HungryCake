@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HungryCake.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20190822092249_RestructuringDB")]
-    partial class RestructuringDB
+    [Migration("20190824014140_Fixing_cat_parentId")]
+    partial class Fixing_cat_parentId
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -26,7 +26,7 @@ namespace HungryCake.API.Migrations
                     b.Property<string>("English")
                         .IsRequired();
 
-                    b.Property<int?>("ParentIdId");
+                    b.Property<int?>("ParentId");
 
                     b.Property<string>("Portuguese");
 
@@ -34,7 +34,7 @@ namespace HungryCake.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ParentIdId");
+                    b.HasIndex("ParentId");
 
                     b.ToTable("Categories");
                 });
@@ -394,9 +394,9 @@ namespace HungryCake.API.Migrations
 
             modelBuilder.Entity("HungryCake.API.Models.Category", b =>
                 {
-                    b.HasOne("HungryCake.API.Models.Category", "ParentId")
+                    b.HasOne("HungryCake.API.Models.Category", "Parent")
                         .WithMany()
-                        .HasForeignKey("ParentIdId");
+                        .HasForeignKey("ParentId");
                 });
 
             modelBuilder.Entity("HungryCake.API.Models.FeedHtml", b =>

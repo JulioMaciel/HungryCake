@@ -2,10 +2,10 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { AuthGuard } from './_guards/auth.guard';
 import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
-import { FeedListComponent } from './feeds/feed-list/feed-list.component';
-import { FeedListResolver } from './_resolvers/feed-list.resolver';
-import { FeedAddEditComponent } from './feeds/feed-add-edit/feed-add-edit.component';
-import { FeedEditResolver } from './_resolvers/feed-edit.resolver';
+import { RssAddEditComponent } from './feeds/rss-add-edit/rss-add-edit.component';
+import { CategoryListComponent } from './categories/category-list/category-list.component';
+import { CategoryListResolver } from './_resolvers/category-list.resolver';
+import { TreeCategoriesComponent } from './categories/tree-categories/tree-categories.component';
 
 export const appRoutes: Routes = [
     { path: '', component: HomeComponent},
@@ -14,9 +14,11 @@ export const appRoutes: Routes = [
         runGuardsAndResolvers: 'always',
         canActivate: [AuthGuard],
         children: [
-            { path: 'feeds', component: FeedListComponent, resolve: {users: FeedListResolver}},
-            { path: 'feed/add', component: FeedAddEditComponent},
-            { path: 'feed/edit/:id', component: FeedAddEditComponent, resolve: {user: FeedEditResolver}},
+            // { path: 'feeds', component: FeedListComponent, resolve: {users: FeedListResolver}},
+            { path: 'rss/add', component: RssAddEditComponent},
+            // { path: 'feed/edit/:id', component: RssAddEditComponent, resolve: {user: FeedEditResolver}},
+            { path: 'categories', component: CategoryListComponent, resolve: {categories: CategoryListResolver}},
+            { path: 'tree-categories', component: TreeCategoriesComponent, resolve: {categories: CategoryListResolver} },
             { path: 'admin', component: AdminPanelComponent, data: {roles: ['Admin']}},
         ]
     },

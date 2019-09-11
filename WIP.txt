@@ -1,30 +1,35 @@
 
 TODO
-* add category
-* list categories
+* página, lista todas categorias
+* ter opção para add
+* dá opção para editar nome, parent, etc
+
+TODO
+* listar categorias na janela add rss
+* lá, tem que ter opção para adicionar nova, escrevendo o nome do pai
 
 TODO
 * add rss
-* show all rss (in columns) on feeds page
+* api: le o valor quando cadastrado (ou iniciado o server) e guarda na memoria
+* user subscribe rss da memoria
+* api volta a ler o feed, se tiver update, disposable o antigo e add na memoria
+* show created rss e checa se atualiza a cada X minutos
 
 TODO
-* page to user sign rss
+* btn preview content ao add rss
+
+TODO
+* ao criar user, criar userGrid default pra ele
+* page to user criar userColumn
 * show only rss signed by user
 
-tbl Topic {
-name,
-parent
-}
-columnsview will always show the most especific signed, them the more generic minus the especifics
-
 TODO
-* load topics when adding rss
-* admin page: show topic tree until rss
-* let user sign topics
-* show signed topics by user
+* usuario editar grid
+* user set novos userColumns para o grid
+* user edit config userColumn
 
-
-feed: rssFeed, topicFeed (+ subtopic), redditFeed*, htmlFeed**, twitFeed***, instaFeed****
+columnsview will always show the most especific signed, them the more generic minus the especifics
+- na real acho que nao da nada o mesmo feed aparecer duas vezes, problema do usuário, ele que tire
 
 reddit pode ter a opção de formato (orderby) levando em conta a pontuação
 

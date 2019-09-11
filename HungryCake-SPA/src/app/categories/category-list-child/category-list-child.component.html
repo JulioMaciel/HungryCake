@@ -1,0 +1,43 @@
+<i class="fa mr-2 fixed" 
+  [ngClass]="category.children?.length > 0 ? 
+  (showChildren! ? 'pointer fa-chevron-down' : 
+  'pointer fa-chevron-right') : 'fa-angle-right'" 
+  (click)="onHideChildren()"></i>
+
+  <!-- [ngClass]="showSelectToFeed && {'font-weight': hover==true && 'bold'}"  -->
+
+<span [ngClass]="{feedSelect : showSelectToFeed}"
+  ngbPopover="Select this category"
+  placement="right"
+  triggers="mouseenter:mouseleave"
+  [disablePopover]="!showSelectToFeed"
+  (click)="showSelectToFeed && onSelectedToFeed(category)"
+  >{{ category.english }}</span>
+<span class="badge badge-warning badge-pill ml-1" *ngIf="category.children?.length > 0"> 
+  {{category.children?.length}}</span>
+
+<button *ngIf="this.editMode && 
+  category.english != 'Uncategorized' && category.english != 'General'" 
+    class="btn btn-info btn-xs ml-1" (click)="onSelectedCat(category)">
+    <i class="fa fa-cog" aria-hidden="true"></i>
+</button>
+<button *ngIf="catFormDirty && (category.english != 'Uncategorized') && 
+              !setAsFormParent"
+  (click)="onSelectedParent(category)" class="btn btn-primary btn-xs ml-1">
+  <i class="fa fa-external-link" aria-hidden="true"></i> 
+</button>
+
+<ul *ngIf="category.children && showChildren">
+  <li *ngFor="let child of category.children"
+  class="">
+    <app-category-list-child 
+    [category]="child"
+    [editMode]="editMode"
+    [catFormDirty]="catFormDirty"
+    [showSelectToFeed]="showSelectToFeed"
+    (catToFeed)="showSelectToFeed && onSelectedToFeed($event)"
+    (selectedCat)="onSelectedCat($event)"
+    (selectedParent)="onSelectedParent($event)">
+    </app-category-list-child>
+  </li>
+</ul>

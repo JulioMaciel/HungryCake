@@ -5,7 +5,9 @@ import { Observable } from 'rxjs';
 import { User } from '../_models/user';
 import { PaginatedResult } from '../_models/pagination';
 import { map } from 'rxjs/operators';
-import { Feed } from '../_models/feed';
+import { Rss } from '../_models/rss';
+import { Category } from '../_models/category';
+import { RssItem } from '../_models/rssItem';
 
 @Injectable({
   providedIn: 'root'
@@ -15,33 +17,16 @@ export class FeedService {
 
   constructor(private http: HttpClient) { }
 
-getFeeds(page?, itemsPerPage?): Observable<PaginatedResult<Feed[]>> {
-  const paginatedResult: PaginatedResult<Feed[]> = new PaginatedResult<Feed[]>();
+  getRssPreview(rssUrl: string): Observable<RssItem[]> {
 
-  let params = new HttpParams();
+    let params = new HttpParams();
+    params = params.append('RssUrl', rssUrl);
 
-  if (page != null && itemsPerPage != null) {
-    params = params.append('pageNumber', page);
-    params = params.append('pageSize', itemsPerPage);
+    return this.http.get<RssItem[]>(this.baseUrl + 'feeds/', { params });
   }
 
-  // if (userParams != null) {
-  //   params = params.append('orderBy', userParams.orderBy);
-  // }
-
-  return this.http.get<Feed[]>(this.baseUrl + 'feeds', { observe: 'response', params}).pipe(
-    map(response => {
-      paginatedResult.result = response.body;
-      if (response.headers.get('Pagination') != null) {
-        paginatedResult.pagination = JSON.parse(response.headers.get('Pagination'));
-      }
-      return paginatedResult;
-    })
-  );
-}
-
-getFeed(id: number): Observable<Feed> {
-  return this.http.get<Feed>(this.baseUrl + 'feeds/' + id);
-}
+  add(rss: Rss) {
+    return this.http.post(this.baseUrl + 'feeds/add', rss);
+  }
 
 }

@@ -22,11 +22,14 @@ import { HasRoleDirective } from './_directives/hasRole.directive';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AlertifyService } from './_services/alertify.service';
-import { FeedListComponent } from './feeds/feed-list/feed-list.component';
-import { FeedService } from './_services/feed.service';
-import { FeedAddEditComponent } from './feeds/feed-add-edit/feed-add-edit.component';
-import { FeedListResolver } from './_resolvers/feed-list.resolver';
-import { FeedEditResolver } from './_resolvers/feed-edit.resolver';
+import { CategoryListResolver } from './_resolvers/category-list.resolver';
+import { RssAddEditComponent } from './feeds/rss-add-edit/rss-add-edit.component';
+import { CategoryListComponent } from './categories/category-list/category-list.component';
+import { CategoryListChildComponent } from './categories/category-list-child/category-list-child.component';
+import { TreeCategoriesComponent } from './categories/tree-categories/tree-categories.component';
+import { TreeviewModule } from 'ngx-treeview';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { TimeAgoPipe } from 'time-ago-pipe';
 
 export function tokenGetter() {
    return localStorage.getItem('token');
@@ -41,9 +44,11 @@ export function tokenGetter() {
       AdminPanelComponent,
       RolesModalComponent,
       HasRoleDirective,
-      FeedListComponent,
-      FeedAddEditComponent,
-      NavComponent
+      RssAddEditComponent,
+      CategoryListComponent,
+      CategoryListChildComponent,
+      TreeCategoriesComponent,
+      TimeAgoPipe
    ],
    imports: [
       BrowserModule,
@@ -53,12 +58,14 @@ export function tokenGetter() {
       ReactiveFormsModule,
       OverlayModule,
       BrowserAnimationsModule,
+      NgbModule,
       BsDropdownModule.forRoot(),
       PaginationModule.forRoot(),
       TabsModule.forRoot(),
       ButtonsModule.forRoot(),
       RouterModule.forRoot(appRoutes),
       ModalModule.forRoot(),
+      TreeviewModule.forRoot(),
       JwtModule.forRoot({
          config: {
             tokenGetter,
@@ -77,9 +84,7 @@ export function tokenGetter() {
       UserService,
       AdminService,
       AlertifyService,
-      FeedService,
-      FeedListResolver,
-      FeedEditResolver
+      CategoryListResolver
    ],
    bootstrap: [
       AppComponent

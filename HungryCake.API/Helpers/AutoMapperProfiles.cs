@@ -14,12 +14,33 @@ namespace HungryCake.API.Helpers
             CreateMap<User, UserListDto>();
             CreateMap<User, UserDetailDto>();
 
-            // CreateMap<FeedAddDto, Feed>();
-            // CreateMap<FeedEditDto, Feed>();
-            // CreateMap<Feed, FeedListDto>();
-            // CreateMap<Feed, FeedDetailDto>();
-            // CreateMap<FeedsSelectDto, Feed>();
-            
+            CreateMap<Category, CategoryListDto>()
+                .ForMember(dest => dest.Parent, opt =>
+                {
+                    opt.MapFrom(c => c.Parent);
+                });
+
+            CreateMap<CategoryEditDto, Category>()
+                .ForMember(dest => dest.ParentId, opt =>
+                {
+                    opt.MapFrom(c => c.Parent.Id);
+                })
+                .ForMember(dest => dest.Parent, opt =>
+                {
+                    opt.Ignore();
+                });
+
+            CreateMap<CategoryAddDto, Category>()
+                .ForMember(dest => dest.ParentId, opt =>
+                {
+                    opt.MapFrom(c => c.Parent.Id);
+                })
+                .ForMember(dest => dest.Parent, opt =>
+                {
+                    opt.Ignore();
+                });
+
+            CreateMap<FeedRssAddDto, FeedRss>();
         }
     }
 }

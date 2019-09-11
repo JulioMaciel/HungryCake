@@ -3,21 +3,21 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { FeedListComponent } from './feed-list.component';
+import { CategoryListChildComponent } from './category-list-child.component';
 
-describe('FeedListComponent', () => {
-  let component: FeedListComponent;
-  let fixture: ComponentFixture<FeedListComponent>;
+describe('CategoryListChildComponent', () => {
+  let component: CategoryListChildComponent;
+  let fixture: ComponentFixture<CategoryListChildComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FeedListComponent ]
+      declarations: [ CategoryListChildComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FeedListComponent);
+    fixture = TestBed.createComponent(CategoryListChildComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

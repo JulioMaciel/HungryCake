@@ -1,0 +1,13 @@
+ul {
+    list-style: none;
+    padding: 0px;
+}
+
+.main {
+    font-size: 1.2em
+}
+
+.editForm input, button {
+    margin-bottom: 0.2em
+}
+

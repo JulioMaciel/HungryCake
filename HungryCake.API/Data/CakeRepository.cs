@@ -18,7 +18,12 @@ namespace HungryCake.API.Data
 
         public void Add<T>(T entity) where T : class
         {
-            _context.Add(entity);
+            _context.Add(entity);            
+
+            // var aaa = _context.ChangeTracker.Entries();
+            // var bbb = aaa.Where(x => x.State == EntityState.Added);
+            // var ccc = bbb.Where(x => x.Entity.GetType().Name == "Categories");
+            // var ddd = ccc.Select(x => x.Entity as Category);
         }
 
         public void Delete<T>(T entity) where T : class
@@ -59,6 +64,21 @@ namespace HungryCake.API.Data
             }
 
             return await PagedList<User>.CreateAsync(users, userParams.PageNumber, userParams.PageSize);
+        }
+
+        public async Task<IEnumerable<Category>> GetCategories()
+        {
+            var categories = await _context.Categories.ToListAsync();
+            return categories;
+        }
+
+        public async Task<Category> GetCategory(int id)
+        {
+            var query = _context.Categories.AsQueryable();
+
+             var cat = await query.FirstOrDefaultAsync(u => u.Id == id);
+
+            return cat;
         }
 
         // public async Task<Feed> GetFeed(int id)

@@ -56,11 +56,19 @@ namespace HungryCakeApp.API.Data
 
         public void SeedCategory()
         {
+            if (_repo.GetCategories().Result.Any())
+                return;
+
             var cat = new Category();
             cat.English = "General";
             cat.Portuguese = "Geral";
-
             _repo.Add(cat);
+
+            cat = new Category();
+            cat.English = "Uncategorized";
+            cat.Portuguese = "Sem Categoria";
+            _repo.Add(cat);
+
             _repo.SaveAll();
         }
     }
