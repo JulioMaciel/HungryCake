@@ -10,7 +10,6 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
   model: any = {};
-  photoUrl: string;
   registerMode = false;
 
   constructor(public authService: AuthService, private alertify: AlertifyService, private router: Router) { }
@@ -24,7 +23,7 @@ export class HomeComponent implements OnInit {
     }, error => {
       this.alertify.error(error);
     }, () => {
-      this.router.navigate(['/feeds']);
+      this.router.navigate(['/main']);
     });
   }
 

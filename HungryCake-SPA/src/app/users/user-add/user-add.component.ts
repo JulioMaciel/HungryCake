@@ -29,7 +29,7 @@ export class UserAddComponent implements OnInit {
 
   createRegisterForm() {
     this.registerForm = this.fb.group({
-      username: ['', Validators.required],
+      email: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(8)]],
       confirmPassword: ['', Validators.required]
     }, { validator: this.passwordMatchValidator });
@@ -48,7 +48,7 @@ export class UserAddComponent implements OnInit {
         this.alertify.error(error);
       }, () => {
         this.authService.login(this.user).subscribe(() => {
-          this.router.navigate(['/feeds']);
+          this.router.navigate(['/main']);
         });
       });
     }

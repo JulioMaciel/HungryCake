@@ -1,35 +1,36 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { NavComponent } from './nav/nav.component';
-import { HomeComponent } from './home/home.component';
-import { UserAddComponent } from './users/user-add/user-add.component';
 import { appRoutes } from './routes';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BsDropdownModule, TabsModule, PaginationModule, ButtonsModule, ModalModule } from 'ngx-bootstrap';
 import { RouterModule } from '@angular/router';
 import { JwtModule } from '@auth0/angular-jwt';
-import { AuthService } from './_services/auth.service';
-import { AuthGuard } from './_guards/auth.guard';
-import { UserService } from './_services/user.service';
-import { AdminService } from './_services/admin.service';
-import { ErrorInterceptorProvider } from './_services/error.interceptor';
-import { RolesModalComponent } from './users/roles-modal/roles-modal.component';
-import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
-import { HasRoleDirective } from './_directives/hasRole.directive';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AlertifyService } from './_services/alertify.service';
-import { CategoryListResolver } from './_resolvers/category-list.resolver';
-import { RssAddEditComponent } from './feeds/rss-add-edit/rss-add-edit.component';
-import { CategoryListComponent } from './categories/category-list/category-list.component';
-import { CategoryListChildComponent } from './categories/category-list-child/category-list-child.component';
-import { TreeCategoriesComponent } from './categories/tree-categories/tree-categories.component';
-import { TreeviewModule } from 'ngx-treeview';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TimeAgoPipe } from 'time-ago-pipe';
+import { ErrorInterceptorProvider } from './_services/error.interceptor';
+
+import { AuthGuard } from './_guards/auth.guard';
+import { UserService } from './_services/user.service';
+import { AuthService } from './_services/auth.service';
+import { AlertifyService } from './_services/alertify.service';
+import { HasLevelDirective } from './_directives/hasLevel.directive';
+import { RssEditResolver } from './_resolvers/rss-edit.resolver';
+import { RssListResolver } from './_resolvers/rss-list.resolver';
+
+import { AppComponent } from './app.component';
+import { NavComponent } from './nav/nav.component';
+import { HomeComponent } from './home/home.component';
+import { UserAddComponent } from './users/user-add/user-add.component';
+import { GridViewComponent } from './grid/grid-view/grid-view.component';
+import { GridEditComponent } from './grid/grid-edit/grid-edit.component';
+import { ColumnViewComponent } from './column/column-view/column-view.component';
+import { ColumnEditComponent } from './column/column-edit/column-edit.component';
+import { RssListComponent } from './feeds/rss/rss-list/rss-list.component';
+import { RssAddEditComponent } from './feeds/rss/rss-add-edit/rss-add-edit.component';
 
 export function tokenGetter() {
    return localStorage.getItem('token');
@@ -38,17 +39,17 @@ export function tokenGetter() {
 @NgModule({
    declarations: [
       AppComponent,
+      HasLevelDirective,
+      TimeAgoPipe,
       NavComponent,
       HomeComponent,
       UserAddComponent,
-      AdminPanelComponent,
-      RolesModalComponent,
-      HasRoleDirective,
+      GridViewComponent,
+      GridEditComponent,
+      ColumnViewComponent,
+      ColumnEditComponent,
+      RssListComponent,
       RssAddEditComponent,
-      CategoryListComponent,
-      CategoryListChildComponent,
-      TreeCategoriesComponent,
-      TimeAgoPipe
    ],
    imports: [
       BrowserModule,
@@ -65,7 +66,6 @@ export function tokenGetter() {
       ButtonsModule.forRoot(),
       RouterModule.forRoot(appRoutes),
       ModalModule.forRoot(),
-      TreeviewModule.forRoot(),
       JwtModule.forRoot({
          config: {
             tokenGetter,
@@ -75,16 +75,16 @@ export function tokenGetter() {
       })
    ],
    entryComponents: [
-      RolesModalComponent
+      // RolesModalComponent
    ],
    providers: [
       AuthService,
       ErrorInterceptorProvider,
       AuthGuard,
       UserService,
-      AdminService,
       AlertifyService,
-      CategoryListResolver
+      RssEditResolver,
+      RssListResolver
    ],
    bootstrap: [
       AppComponent

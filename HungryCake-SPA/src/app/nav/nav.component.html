@@ -6,26 +6,26 @@
       <li class="nav-item" routerLinkActive="active">
         <a class="nav-link" [routerLink]="['/feeds']" >Feeds</a>
       </li>
-      <li *appHasRole="['Admin']" class="nav-item" routerLinkActive="active">
+      <li class="nav-item" routerLinkActive="active">
         <a class="nav-link" [routerLink]="['/rss/add']">Add RSS</a>
       </li>
-      <li *appHasRole="['Admin']" class="nav-item" routerLinkActive="active">
-        <a class="nav-link" [routerLink]="['/categories']">Categories</a>
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" [routerLink]="['/rss/list']">Feeds RSS</a>
       </li>
-      <li *appHasRole="['Admin']" class="nav-item" routerLinkActive="active">
-        <a class="nav-link" [routerLink]="['/tree-categories']">Tree Categories</a>
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" [routerLink]="['/grid/add']">Add Grid</a>
       </li>
-      <li *appHasRole="['Admin']" class="nav-item" routerLinkActive="active">
-        <a class="nav-link" [routerLink]="['/admin']">Admin</a>
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" [routerLink]="['/column/add']">Add Column</a>
       </li>
     </ul>
 
-    <ul class="navbar-nav mr-auto float-right">
-      <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link btnLogout" (click)="logout()"><i class="fa fa-sign-out"></i> Logout</a>
-      </li>
-    </ul>
 
   </div>
+  <ul *ngIf="loggedIn()" class="navbar-nav mr-auto float-right">
+    <li class="nav-item" routerLinkActive="active">
+      <a class="nav-link btnLogout" (click)="logout()"><i class="fa fa-sign-out"></i> Logout</a>
+    </li>
+  </ul>
 
 </nav>

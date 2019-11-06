@@ -16,25 +16,106 @@ namespace HungryCake.API.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.2.6-servicing-10079");
 
-            modelBuilder.Entity("HungryCake.API.Models.Category", b =>
+            modelBuilder.Entity("HungryCake.API.Models.Column", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("English")
-                        .IsRequired();
+                    b.Property<string>("DateTimeFormat");
 
-                    b.Property<int?>("ParentId");
+                    b.Property<int>("GridId");
 
-                    b.Property<string>("Portuguese");
+                    b.Property<int>("MaxItems");
 
-                    b.Property<string>("Spanish");
+                    b.Property<string>("Name");
+
+                    b.Property<bool>("ShowDateTime");
+
+                    b.Property<bool>("ShowImage");
+
+                    b.Property<bool>("ShowRollbar");
+
+                    b.Property<bool>("ShowSummary");
+
+                    b.Property<int>("xPosition");
+
+                    b.Property<int>("yPosition");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ParentId");
+                    b.HasIndex("GridId");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Columns");
+                });
+
+            modelBuilder.Entity("HungryCake.API.Models.ColumnHtml", b =>
+                {
+                    b.Property<int>("ColumnId");
+
+                    b.Property<int>("FeedHtmlId");
+
+                    b.Property<int>("FilterId");
+
+                    b.HasKey("ColumnId", "FeedHtmlId");
+
+                    b.HasIndex("FeedHtmlId");
+
+                    b.HasIndex("FilterId");
+
+                    b.ToTable("ColumnHtml");
+                });
+
+            modelBuilder.Entity("HungryCake.API.Models.ColumnReddit", b =>
+                {
+                    b.Property<int>("ColumnId");
+
+                    b.Property<int>("FeedRedditId");
+
+                    b.Property<int>("FilterId");
+
+                    b.Property<int>("TopRange");
+
+                    b.HasKey("ColumnId", "FeedRedditId");
+
+                    b.HasIndex("FeedRedditId");
+
+                    b.HasIndex("FilterId");
+
+                    b.ToTable("ColumnReddit");
+                });
+
+            modelBuilder.Entity("HungryCake.API.Models.ColumnRss", b =>
+                {
+                    b.Property<int>("ColumnId");
+
+                    b.Property<int>("FeedRssId");
+
+                    b.Property<int>("FilterId");
+
+                    b.HasKey("ColumnId", "FeedRssId");
+
+                    b.HasIndex("FeedRssId");
+
+                    b.HasIndex("FilterId");
+
+                    b.ToTable("ColumnRss");
+                });
+
+            modelBuilder.Entity("HungryCake.API.Models.ColumnTwitter", b =>
+                {
+                    b.Property<int>("ColumnId");
+
+                    b.Property<int>("FeedTwitterId");
+
+                    b.Property<int>("FilterId");
+
+                    b.HasKey("ColumnId", "FeedTwitterId");
+
+                    b.HasIndex("FeedTwitterId");
+
+                    b.HasIndex("FilterId");
+
+                    b.ToTable("ColumnTwitter");
                 });
 
             modelBuilder.Entity("HungryCake.API.Models.FeedHtml", b =>
@@ -42,30 +123,31 @@ namespace HungryCake.API.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("CategoryId");
-
                     b.Property<DateTime>("Created");
 
-                    b.Property<int>("CreatorId");
+                    b.Property<string>("Description");
 
                     b.Property<bool>("HasPayWall");
 
+                    b.Property<byte[]>("Icon");
+
                     b.Property<bool>("IsActive");
 
-                    b.Property<int>("Language");
+                    b.Property<DateTime>("LastFail");
+
+                    b.Property<DateTime>("LastSuccess");
 
                     b.Property<bool>("LoadedLastTime");
 
                     b.Property<string>("Name");
 
-                    b.Property<string>("Url")
-                        .IsRequired();
+                    b.Property<string>("PatternLink");
+
+                    b.Property<string>("PatternTitle");
+
+                    b.Property<string>("UrlSite");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CategoryId");
-
-                    b.HasIndex("CreatorId");
 
                     b.ToTable("FeedsHtml");
                 });
@@ -75,30 +157,19 @@ namespace HungryCake.API.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("CategoryId");
-
                     b.Property<DateTime>("Created");
 
-                    b.Property<int>("CreatorId");
-
-                    b.Property<bool>("HasPayWall");
+                    b.Property<byte[]>("Icon");
 
                     b.Property<bool>("IsActive");
 
-                    b.Property<int>("Language");
+                    b.Property<DateTime>("LastFail");
 
-                    b.Property<bool>("LoadedLastTime");
+                    b.Property<DateTime>("LastSuccess");
 
-                    b.Property<string>("Name");
-
-                    b.Property<string>("Url")
-                        .IsRequired();
+                    b.Property<string>("reddit");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CategoryId");
-
-                    b.HasIndex("CreatorId");
 
                     b.ToTable("FeedsReddit");
                 });
@@ -108,33 +179,27 @@ namespace HungryCake.API.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("CategoryId");
-
                     b.Property<DateTime>("Created");
 
-                    b.Property<int>("CreatorId");
+                    b.Property<string>("Description");
 
                     b.Property<bool>("HasPayWall");
 
+                    b.Property<byte[]>("Icon");
+
                     b.Property<bool>("IsActive");
 
-                    b.Property<int>("Language");
+                    b.Property<DateTime>("LastFail");
 
-                    b.Property<bool>("LoadedLastTime");
+                    b.Property<DateTime>("LastSuccess");
 
                     b.Property<string>("Name");
 
-                    b.Property<string>("Url")
-                        .IsRequired();
+                    b.Property<string>("UrlRss");
 
-                    b.Property<string>("UrlSite")
-                        .IsRequired();
+                    b.Property<string>("UrlSite");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CategoryId");
-
-                    b.HasIndex("CreatorId");
 
                     b.ToTable("FeedsRss");
                 });
@@ -144,159 +209,57 @@ namespace HungryCake.API.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("CategoryId");
-
                     b.Property<DateTime>("Created");
 
-                    b.Property<int>("CreatorId");
-
-                    b.Property<bool>("HasPayWall");
+                    b.Property<byte[]>("Icon");
 
                     b.Property<bool>("IsActive");
 
-                    b.Property<int>("Language");
+                    b.Property<DateTime>("LastFail");
 
-                    b.Property<bool>("LoadedLastTime");
+                    b.Property<DateTime>("LastSuccess");
 
-                    b.Property<string>("Name");
-
-                    b.Property<string>("Url")
-                        .IsRequired();
+                    b.Property<string>("Twitter");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CategoryId");
-
-                    b.HasIndex("CreatorId");
 
                     b.ToTable("FeedsTwitter");
                 });
 
-            modelBuilder.Entity("HungryCake.API.Models.Role", b =>
+            modelBuilder.Entity("HungryCake.API.Models.Filter", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken();
+                    b.Property<bool>("CaseSensitive");
 
-                    b.Property<string>("Name")
-                        .HasMaxLength(256);
+                    b.Property<string>("Content");
 
-                    b.Property<string>("NormalizedName")
-                        .HasMaxLength(256);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedName")
-                        .IsUnique()
-                        .HasName("RoleNameIndex");
-
-                    b.ToTable("AspNetRoles");
-                });
-
-            modelBuilder.Entity("HungryCake.API.Models.User", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("AccessFailedCount");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken();
-
-                    b.Property<DateTime>("Created");
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(256);
-
-                    b.Property<bool>("EmailConfirmed");
-
-                    b.Property<DateTime>("LastActive");
-
-                    b.Property<bool>("LockoutEnabled");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256);
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256);
-
-                    b.Property<string>("PasswordHash");
-
-                    b.Property<string>("SecurityStamp");
-
-                    b.Property<bool>("TwoFactorEnabled");
-
-                    b.Property<string>("UserName")
-                        .HasMaxLength(256);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedEmail")
-                        .HasName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasName("UserNameIndex");
-
-                    b.ToTable("AspNetUsers");
-                });
-
-            modelBuilder.Entity("HungryCake.API.Models.UserColumn", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("DatetimeFormat");
-
-                    b.Property<string>("FeedsJSON")
-                        .IsRequired();
-
-                    b.Property<int>("GridPositionColumn");
-
-                    b.Property<int>("GridPositionRow");
-
-                    b.Property<string>("Name")
-                        .IsRequired();
-
-                    b.Property<int>("QuantItems");
-
-                    b.Property<bool>("ShowDateTime");
-
-                    b.Property<bool>("ShowFeedPicture");
-
-                    b.Property<bool>("ShowRollbar");
-
-                    b.Property<bool>("ShowSummary");
-
-                    b.Property<int>("UserGridId");
+                    b.Property<int>("Percentage");
 
                     b.Property<int>("UserId");
 
-                    b.Property<int>("Width");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UserGridId");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserColumns");
+                    b.ToTable("Filter");
                 });
 
-            modelBuilder.Entity("HungryCake.API.Models.UserGrid", b =>
+            modelBuilder.Entity("HungryCake.API.Models.Grid", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("FontSize");
 
+                    b.Property<string>("Name");
+
                     b.Property<int>("QuantColumns");
 
                     b.Property<int>("QuantRows");
+
+                    b.Property<int>("RowHeightLimit");
 
                     b.Property<int>("Template");
 
@@ -306,163 +269,108 @@ namespace HungryCake.API.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserGrids");
+                    b.ToTable("Grids");
                 });
 
-            modelBuilder.Entity("HungryCake.API.Models.UserRole", b =>
-                {
-                    b.Property<int>("UserId");
-
-                    b.Property<int>("RoleId");
-
-                    b.HasKey("UserId", "RoleId");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("AspNetUserRoles");
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
+            modelBuilder.Entity("HungryCake.API.Models.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("ClaimType");
+                    b.Property<string>("Email");
 
-                    b.Property<string>("ClaimValue");
+                    b.Property<int>("Level");
 
-                    b.Property<int>("RoleId");
+                    b.Property<byte[]>("PasswordHash");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("AspNetRoleClaims");
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("ClaimType");
-
-                    b.Property<string>("ClaimValue");
-
-                    b.Property<int>("UserId");
+                    b.Property<byte[]>("PasswordSalt");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
-
-                    b.ToTable("AspNetUserClaims");
+                    b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
+            modelBuilder.Entity("HungryCake.API.Models.Column", b =>
                 {
-                    b.Property<string>("LoginProvider");
-
-                    b.Property<string>("ProviderKey");
-
-                    b.Property<string>("ProviderDisplayName");
-
-                    b.Property<int>("UserId");
-
-                    b.HasKey("LoginProvider", "ProviderKey");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("AspNetUserLogins");
+                    b.HasOne("HungryCake.API.Models.Grid", "Grid")
+                        .WithMany("Columns")
+                        .HasForeignKey("GridId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
+            modelBuilder.Entity("HungryCake.API.Models.ColumnHtml", b =>
                 {
-                    b.Property<int>("UserId");
+                    b.HasOne("HungryCake.API.Models.Column", "Column")
+                        .WithMany("FeedsHtml")
+                        .HasForeignKey("ColumnId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
-                    b.Property<string>("LoginProvider");
+                    b.HasOne("HungryCake.API.Models.FeedHtml", "FeedHtml")
+                        .WithMany("ColumnsHtml")
+                        .HasForeignKey("FeedHtmlId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
-                    b.Property<string>("Name");
-
-                    b.Property<string>("Value");
-
-                    b.HasKey("UserId", "LoginProvider", "Name");
-
-                    b.ToTable("AspNetUserTokens");
+                    b.HasOne("HungryCake.API.Models.Filter", "Filter")
+                        .WithMany()
+                        .HasForeignKey("FilterId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("HungryCake.API.Models.Category", b =>
+            modelBuilder.Entity("HungryCake.API.Models.ColumnReddit", b =>
                 {
-                    b.HasOne("HungryCake.API.Models.Category", "Parent")
+                    b.HasOne("HungryCake.API.Models.Column", "Column")
+                        .WithMany("FeedsReddit")
+                        .HasForeignKey("ColumnId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("HungryCake.API.Models.FeedReddit", "FeedReddit")
+                        .WithMany("ColumnsReddit")
+                        .HasForeignKey("FeedRedditId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("HungryCake.API.Models.Filter", "Filter")
                         .WithMany()
-                        .HasForeignKey("ParentId");
+                        .HasForeignKey("FilterId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("HungryCake.API.Models.FeedHtml", b =>
+            modelBuilder.Entity("HungryCake.API.Models.ColumnRss", b =>
                 {
-                    b.HasOne("HungryCake.API.Models.Category", "Category")
-                        .WithMany()
-                        .HasForeignKey("CategoryId")
+                    b.HasOne("HungryCake.API.Models.Column", "Column")
+                        .WithMany("FeedsRss")
+                        .HasForeignKey("ColumnId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("HungryCake.API.Models.User", "Creator")
+                    b.HasOne("HungryCake.API.Models.FeedRss", "FeedRss")
+                        .WithMany("ColumnsRss")
+                        .HasForeignKey("FeedRssId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("HungryCake.API.Models.Filter", "Filter")
                         .WithMany()
-                        .HasForeignKey("CreatorId")
+                        .HasForeignKey("FilterId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("HungryCake.API.Models.FeedReddit", b =>
+            modelBuilder.Entity("HungryCake.API.Models.ColumnTwitter", b =>
                 {
-                    b.HasOne("HungryCake.API.Models.Category", "Category")
-                        .WithMany()
-                        .HasForeignKey("CategoryId")
+                    b.HasOne("HungryCake.API.Models.Column", "Column")
+                        .WithMany("FeedsTwitter")
+                        .HasForeignKey("ColumnId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("HungryCake.API.Models.User", "Creator")
-                        .WithMany()
-                        .HasForeignKey("CreatorId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("HungryCake.API.Models.FeedRss", b =>
-                {
-                    b.HasOne("HungryCake.API.Models.Category", "Category")
-                        .WithMany()
-                        .HasForeignKey("CategoryId")
+                    b.HasOne("HungryCake.API.Models.FeedTwitter", "FeedTwitter")
+                        .WithMany("ColumnsTwitter")
+                        .HasForeignKey("FeedTwitterId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("HungryCake.API.Models.User", "Creator")
+                    b.HasOne("HungryCake.API.Models.Filter", "Filter")
                         .WithMany()
-                        .HasForeignKey("CreatorId")
+                        .HasForeignKey("FilterId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("HungryCake.API.Models.FeedTwitter", b =>
-                {
-                    b.HasOne("HungryCake.API.Models.Category", "Category")
-                        .WithMany()
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("HungryCake.API.Models.User", "Creator")
-                        .WithMany()
-                        .HasForeignKey("CreatorId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("HungryCake.API.Models.UserColumn", b =>
-                {
-                    b.HasOne("HungryCake.API.Models.UserGrid", "UserGrid")
-                        .WithMany()
-                        .HasForeignKey("UserGridId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("HungryCake.API.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("HungryCake.API.Models.UserGrid", b =>
+            modelBuilder.Entity("HungryCake.API.Models.Filter", b =>
                 {
                     b.HasOne("HungryCake.API.Models.User", "User")
                         .WithMany()
@@ -470,46 +378,9 @@ namespace HungryCake.API.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("HungryCake.API.Models.UserRole", b =>
+            modelBuilder.Entity("HungryCake.API.Models.Grid", b =>
                 {
-                    b.HasOne("HungryCake.API.Models.Role", "Role")
-                        .WithMany("UserRoles")
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("HungryCake.API.Models.User", "User")
-                        .WithMany("UserRoles")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
-                {
-                    b.HasOne("HungryCake.API.Models.Role")
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
-                {
-                    b.HasOne("HungryCake.API.Models.User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
-                {
-                    b.HasOne("HungryCake.API.Models.User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
-                {
-                    b.HasOne("HungryCake.API.Models.User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);

@@ -1,43 +1,82 @@
 using HungryCake.API.Models;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace HungryCake.API.Data
 {
-    public class DataContext : IdentityDbContext<User, Role, int, IdentityUserClaim<int>,
-    UserRole, IdentityUserLogin<int>, IdentityRoleClaim<int>, IdentityUserToken<int>>
+    public class DataContext : DbContext
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
 
+        public DbSet<User> Users { get; set; }
+        public DbSet<Column> Columns { get; set; }
+        public DbSet<Grid> Grids { get; set; }
         public DbSet<FeedRss> FeedsRss { get; set; }
         public DbSet<FeedHtml> FeedsHtml { get; set; }
         public DbSet<FeedReddit> FeedsReddit { get; set; }
         public DbSet<FeedTwitter> FeedsTwitter { get; set; }
-        public DbSet<Category> Categories { get; set; }
-        public DbSet<UserColumn> UserColumns { get; set; }
-        public DbSet<UserGrid> UserGrids { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            base.OnModelCreating(builder);
+            builder.Entity<Column>()
+                .HasOne(g => g.Grid)
+                .WithMany(c => c.Columns)
+                .HasForeignKey(c => c.GridId);
 
-            builder.Entity<User>().Ignore(c => c.PhoneNumber).Ignore(c => c.PhoneNumberConfirmed);
 
-            builder.Entity<UserRole>(userRole =>
-            {
-                userRole.HasKey(ur => new { ur.UserId, ur.RoleId });
+            builder.Entity<ColumnHtml>()
+                .HasKey(ch => new { ch.ColumnId, ch.FeedHtmlId });
 
-                userRole.HasOne(ur => ur.Role).WithMany(r => r.UserRoles).HasForeignKey(ur => ur.RoleId).IsRequired();
+            builder.Entity<ColumnHtml>()
+                .HasOne(ch => ch.Column)
+                .WithMany(c => c.FeedsHtml)
+                .HasForeignKey(ch => ch.ColumnId);
 
-                userRole.HasOne(ur => ur.User).WithMany(r => r.UserRoles).HasForeignKey(ur => ur.UserId).IsRequired();
-            });
-        }
+            builder.Entity<ColumnHtml>()
+                .HasOne(ch => ch.FeedHtml)
+                .WithMany(f => f.ColumnsHtml)
+                .HasForeignKey(ch => ch.FeedHtmlId);
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.EnableSensitiveDataLogging();
-            base.OnConfiguring(optionsBuilder);
+
+            builder.Entity<ColumnRss>()
+                .HasKey(ch => new { ch.ColumnId, ch.FeedRssId });
+
+            builder.Entity<ColumnRss>()
+                .HasOne(ch => ch.Column)
+                .WithMany(c => c.FeedsRss)
+                .HasForeignKey(ch => ch.ColumnId);
+
+            builder.Entity<ColumnRss>()
+                .HasOne(ch => ch.FeedRss)
+                .WithMany(f => f.ColumnsRss)
+                .HasForeignKey(ch => ch.FeedRssId);
+
+
+            builder.Entity<ColumnReddit>()
+                .HasKey(ch => new { ch.ColumnId, ch.FeedRedditId });
+
+            builder.Entity<ColumnReddit>()
+                .HasOne(ch => ch.Column)
+                .WithMany(c => c.FeedsReddit)
+                .HasForeignKey(ch => ch.ColumnId);
+
+            builder.Entity<ColumnReddit>()
+                .HasOne(ch => ch.FeedReddit)
+                .WithMany(f => f.ColumnsReddit)
+                .HasForeignKey(ch => ch.FeedRedditId);
+
+
+            builder.Entity<ColumnTwitter>()
+                .HasKey(ch => new { ch.ColumnId, ch.FeedTwitterId });
+
+            builder.Entity<ColumnTwitter>()
+                .HasOne(ch => ch.Column)
+                .WithMany(c => c.FeedsTwitter)
+                .HasForeignKey(ch => ch.ColumnId);
+
+            builder.Entity<ColumnTwitter>()
+                .HasOne(ch => ch.FeedTwitter)
+                .WithMany(f => f.ColumnsTwitter)
+                .HasForeignKey(ch => ch.FeedTwitterId);
         }
     }
 }

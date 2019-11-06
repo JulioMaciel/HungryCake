@@ -1,3 +1,4 @@
+using System.IO;
 using System.Linq;
 using AutoMapper;
 using HungryCake.API.Dtos;
@@ -14,33 +15,14 @@ namespace HungryCake.API.Helpers
             CreateMap<User, UserListDto>();
             CreateMap<User, UserDetailDto>();
 
-            CreateMap<Category, CategoryListDto>()
-                .ForMember(dest => dest.Parent, opt =>
-                {
-                    opt.MapFrom(c => c.Parent);
-                });
-
-            CreateMap<CategoryEditDto, Category>()
-                .ForMember(dest => dest.ParentId, opt =>
-                {
-                    opt.MapFrom(c => c.Parent.Id);
-                })
-                .ForMember(dest => dest.Parent, opt =>
-                {
-                    opt.Ignore();
-                });
-
-            CreateMap<CategoryAddDto, Category>()
-                .ForMember(dest => dest.ParentId, opt =>
-                {
-                    opt.MapFrom(c => c.Parent.Id);
-                })
-                .ForMember(dest => dest.Parent, opt =>
-                {
-                    opt.Ignore();
-                });
-
             CreateMap<FeedRssAddDto, FeedRss>();
+                // .ForMember(dest => dest.Icon, opt => {
+                //     opt.MapFrom(src => File.ReadAllBytes(src.NewIconPath));
+                // });
+            CreateMap<FeedRssEditDto, FeedRss>();
+                // .ForMember(dest => dest.Icon, opt => {
+                //     opt.MapFrom(src => File.ReadAllBytes(src.NewIconPath));
+                // });;        
         }
     }
 }

@@ -10,8 +10,4 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  getCategories() {
-    return this.http.get(this.baseUrl + 'categories/');
-  }
-
 }

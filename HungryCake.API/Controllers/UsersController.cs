@@ -11,7 +11,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HungryCake.API.Controllers
 {
-    [ServiceFilter(typeof(LogUserActivity))]
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
@@ -25,17 +24,10 @@ namespace HungryCake.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetUsers([FromQuery]UserParams userParams)
+        public async Task<IActionResult> GetUsers()
         {
-            // var currentUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            // var userFromRepo = await _repo.GetUser(currentUserId);
-            // userParams.ItemId = currentUserId;
-
-            var users = await _repo.GetUsers(userParams);
-
+            var users = await _repo.GetUsers();
             var usersToReturn = _mapper.Map<IEnumerable<UserListDto>>(users);
-
-            Response.AddPagination(users.CurrentPage, users.PageSize, users.TotalCount, users.TotalPages);
 
             return Ok(usersToReturn);
         }

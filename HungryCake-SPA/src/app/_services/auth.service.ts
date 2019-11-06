@@ -22,6 +22,7 @@ export class AuthService {
       map((response: any) => {
         const user = response;
         if (user) {
+          // console.log(user);
           localStorage.setItem('token', user.token);
           localStorage.setItem('user', JSON.stringify(user.user));
           this.decodedToken = this.jwtHelper.decodeToken(user.token);
@@ -40,15 +41,15 @@ export class AuthService {
     return !this.jwtHelper.isTokenExpired(token);
   }
 
-  roleMatch(allowedRoles): boolean {
+  levelMatch(levelRequired: number): boolean {
     let isMatch = false;
-    const userRoles = this.decodedToken.role as Array<string>;
-    allowedRoles.forEach(element => {
-      if (userRoles.includes(element)) {
-        isMatch = true;
-        return;
-      }
-    });
+    const userLevel = this.decodedToken.level as number;
+
+    if (userLevel === levelRequired) {
+      isMatch = true;
+      return;
+    }
+
     return isMatch;
   }
 

@@ -1,11 +1,13 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { AuthGuard } from './_guards/auth.guard';
-import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
-import { RssAddEditComponent } from './feeds/rss-add-edit/rss-add-edit.component';
-import { CategoryListComponent } from './categories/category-list/category-list.component';
-import { CategoryListResolver } from './_resolvers/category-list.resolver';
-import { TreeCategoriesComponent } from './categories/tree-categories/tree-categories.component';
+import { RssAddEditComponent } from './feeds/rss/rss-add-edit/rss-add-edit.component';
+import { RssEditResolver } from './_resolvers/rss-edit.resolver';
+import { GridViewComponent } from './grid/grid-view/grid-view.component';
+import { RssListComponent } from './feeds/rss/rss-list/rss-list.component';
+import { RssListResolver } from './_resolvers/rss-list.resolver';
+import { GridEditComponent as GridEditComponent } from './grid/grid-edit/grid-edit.component';
+import { ColumnEditComponent as ColumnEditComponent } from './column/column-edit/column-edit.component';
 
 export const appRoutes: Routes = [
     { path: '', component: HomeComponent},
@@ -14,12 +16,12 @@ export const appRoutes: Routes = [
         runGuardsAndResolvers: 'always',
         canActivate: [AuthGuard],
         children: [
-            // { path: 'feeds', component: FeedListComponent, resolve: {users: FeedListResolver}},
+            { path: 'main', component: GridViewComponent},
+            { path: 'grid/edit', component: GridEditComponent},
+            { path: 'column/edit', component: ColumnEditComponent},
             { path: 'rss/add', component: RssAddEditComponent},
-            // { path: 'feed/edit/:id', component: RssAddEditComponent, resolve: {user: FeedEditResolver}},
-            { path: 'categories', component: CategoryListComponent, resolve: {categories: CategoryListResolver}},
-            { path: 'tree-categories', component: TreeCategoriesComponent, resolve: {categories: CategoryListResolver} },
-            { path: 'admin', component: AdminPanelComponent, data: {roles: ['Admin']}},
+            { path: 'rss/edit/:id', component: RssAddEditComponent, resolve: {rssToEdit: RssEditResolver}},
+            { path: 'rss/list', component: RssListComponent, resolve: {rssList: RssListResolver}},
         ]
     },
     { path: '**', redirectTo: '', pathMatch: 'full'},

@@ -17,77 +17,48 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace HungryCake.API.Controllers
 {
-    [AllowAnonymous]
     [Route("api/[controller]")]
     [ApiController]
     public class AuthController : ControllerBase
     {
+        private readonly IAuthRepository _repo;
         private readonly IConfiguration _config;
-        private readonly IMapper _mapper;
-        private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
-        public AuthController(IConfiguration config, IMapper mapper, UserManager<User> userManager, SignInManager<User> signInManager)
+        public AuthController(IAuthRepository repo, IConfiguration config)
         {
-            _signInManager = signInManager;
-            _userManager = userManager;
-            _mapper = mapper;
             _config = config;
+            _repo = repo;
         }
 
         [HttpPost("register")]
         public async Task<IActionResult> Register(UserAddDto userForRegisterDto)
         {
-            var userToCreate = _mapper.Map<User>(userForRegisterDto);
+            userForRegisterDto.Email = userForRegisterDto.Email;
 
-            var result = await _userManager.CreateAsync(userToCreate, userForRegisterDto.Password);
+            if (await _repo.UserExists(userForRegisterDto.Email))
+                return BadRequest("Email already exists");
 
-            var userToReturn = _mapper.Map<UserDetailDto>(userToCreate);
-
-            if (result.Succeeded)
+            var userToCreate = new User
             {
-                return CreatedAtRoute("GetUser", new { controller = "Users", Id = userToCreate.Id }, userToReturn);
-            }
+                Email = userForRegisterDto.Email
+            };
 
-           return BadRequest(result.Errors);
+            var createdUser = await _repo.Register(userToCreate, userForRegisterDto.Password);
+
+            return StatusCode(201); // brb
         }
 
         [HttpPost("login")]
         public async Task<IActionResult> Login(UserLoginDto userForLoginDto)
         {
-            var user = await _userManager.FindByNameAsync(userForLoginDto.Username);
+            var userFromRepo = await _repo.Login(userForLoginDto.Email, userForLoginDto.Password);
 
-            var result = await _signInManager.CheckPasswordSignInAsync(user, userForLoginDto.Password, false);
+            if (userFromRepo == null)
+                return Unauthorized();
 
-            if (result.Succeeded)
-            {
-                var appUser = await _userManager.Users.FirstOrDefaultAsync(u => u.NormalizedUserName == userForLoginDto.Username.ToUpper());
-
-                var userToReturn = _mapper.Map<UserListDto>(appUser);
-
-                return Ok(new
-                {
-                    token = GenerateJwtToken(appUser).Result,
-                    user = userToReturn
-                });
-            }
-
-            return Unauthorized();
-        }
-
-        private async Task<string> GenerateJwtToken(User user)
-        {
-            var claims = new List<Claim> // this token should keep smaller than possible, because is passed over every api request
-            {
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.Name, user.UserName)
+            var claims = new[]{
+                new Claim(ClaimTypes.NameIdentifier, userFromRepo.Id.ToString()),
+                new Claim(ClaimTypes.Email, userFromRepo.Email)
             };
-
-            var roles = await _userManager.GetRolesAsync(user);
-
-            foreach (var role in roles)
-            {
-                claims.Add(new Claim(ClaimTypes.Role, role));
-            }
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.GetSection("AppSettings:Token").Value));
 
@@ -104,7 +75,10 @@ namespace HungryCake.API.Controllers
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
-            return tokenHandler.WriteToken(token);
+            return Ok(new {
+                token = tokenHandler.WriteToken(token),
+                user = userFromRepo
+            });
         }
     }
 }

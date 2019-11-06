@@ -5,28 +5,47 @@ import { Observable } from 'rxjs';
 import { User } from '../_models/user';
 import { PaginatedResult } from '../_models/pagination';
 import { map } from 'rxjs/operators';
-import { Rss } from '../_models/rss';
-import { Category } from '../_models/category';
-import { RssItem } from '../_models/rssItem';
+import { FeedRss } from '../_models/feeds/feedRss';
+import { RssItem } from '../_models/feeds/items/rssItem';
+import { Feed } from '../_models/feeds/feed';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FeedService {
-  baseUrl = environment.apiUrl;
+  baseUrl = environment.apiUrl + 'feeds/';
 
   constructor(private http: HttpClient) { }
 
   getRssPreview(rssUrl: string): Observable<RssItem[]> {
-
-    let params = new HttpParams();
-    params = params.append('RssUrl', rssUrl);
-
-    return this.http.get<RssItem[]>(this.baseUrl + 'feeds/', { params });
+    const params = new HttpParams().append('RssUrl', rssUrl);
+    return this.http.get<RssItem[]>(this.baseUrl + 'rss', { params });
   }
 
-  add(rss: Rss) {
-    return this.http.post(this.baseUrl + 'feeds/add', rss);
+  addRss(rss: FeedRss) {
+    return this.http.post(this.baseUrl + 'rss/add', rss);
+  }
+
+  updateRss(rss: FeedRss) {
+    return this.http.put(this.baseUrl + 'rss/' + rss.id, rss);
+  }
+
+  getRss(rssId: number) {
+    return this.http.get<FeedRss>(this.baseUrl + 'rss/' + rssId);
+  }
+
+  getRssList() {
+    return this.http.get<FeedRss[]>(this.baseUrl + 'rss/list');
+  }
+
+  importRssDescription(url: string) {
+    const params = new HttpParams().append('url', url);
+    return this.http.get(this.baseUrl + 'rss/description', { params });
+  }
+
+  tryRssIcon(url: string) {
+    const params = new HttpParams().append('url', url);
+    return this.http.get(this.baseUrl + 'rss/icon', { params });
   }
 
 }

@@ -10,11 +10,9 @@ namespace HungryCake.API.Data
         void Add<T>(T entity) where T: class;
         void Delete<T>(T entity) where T: class;
         Task<bool> SaveAll();        
-        Task<PagedList<User>> GetUsers(UserParams userParams);
+        Task<IEnumerable<User>> GetUsers();
         Task<User> GetUser(int id);
-        // Task<PagedList<Feed>> GetFeeds(FeedParams feedParams);
-        // Task<Feed> GetFeed(int id);
-        Task<IEnumerable<Category>> GetCategories();
-        Task<Category> GetCategory(int id);
+        Task<FeedRss> GetFeedRss(int id);
+        Task<IEnumerable<FeedRss>> GetRssList();
     }
 }

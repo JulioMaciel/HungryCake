@@ -18,12 +18,7 @@ namespace HungryCake.API.Data
 
         public void Add<T>(T entity) where T : class
         {
-            _context.Add(entity);            
-
-            // var aaa = _context.ChangeTracker.Entries();
-            // var bbb = aaa.Where(x => x.State == EntityState.Added);
-            // var ccc = bbb.Where(x => x.Entity.GetType().Name == "Categories");
-            // var ddd = ccc.Select(x => x.Entity as Category);
+            _context.Add(entity);
         }
 
         public void Delete<T>(T entity) where T : class
@@ -38,74 +33,89 @@ namespace HungryCake.API.Data
 
         public async Task<User> GetUser(int id)
         {
-            var query = _context.Users.AsQueryable();
-
-             var user = await query.FirstOrDefaultAsync(u => u.Id == id);
-
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
             return user;
         }
 
-        public async Task<PagedList<User>> GetUsers(UserParams userParams)
+        public async Task<IEnumerable<User>> GetUsers()
         {
-            var users = _context.Users.OrderByDescending(u => u.UserName).AsQueryable();
-
-            if (!string.IsNullOrEmpty(userParams.OrderBy))
-            {
-                switch (userParams.OrderBy)
-                {
-                    case "created":
-                    users = users.OrderByDescending(u => u.Created);
-                    break;
-                    
-                    default:
-                    users = users.OrderByDescending(u => u.LastActive);
-                    break;
-                }
-            }
-
-            return await PagedList<User>.CreateAsync(users, userParams.PageNumber, userParams.PageSize);
+            var users = await _context.Users.ToListAsync();
+            return users;
         }
 
-        public async Task<IEnumerable<Category>> GetCategories()
+        public async Task<FeedRss> GetFeedRss(int id)
         {
-            var categories = await _context.Categories.ToListAsync();
-            return categories;
+            var query = _context.FeedsRss.AsQueryable();
+            var rss = await query.FirstOrDefaultAsync(u => u.Id == id);
+
+            return rss;
         }
 
-        public async Task<Category> GetCategory(int id)
+        public async Task<FeedHtml> GetFeedHtml(int id)
         {
-            var query = _context.Categories.AsQueryable();
+            var query = _context.FeedsHtml.AsQueryable();
+            var feed = await query.FirstOrDefaultAsync(u => u.Id == id);
 
-             var cat = await query.FirstOrDefaultAsync(u => u.Id == id);
-
-            return cat;
+            return feed;
         }
 
-        // public async Task<Feed> GetFeed(int id)
-        // {
-        //     var query = _context.Feeds.AsQueryable();
+        public async Task<FeedReddit> GetFeedReddit(int id)
+        {
+            var query = _context.FeedsReddit.AsQueryable();
+            var feed = await query.FirstOrDefaultAsync(u => u.Id == id);
 
-        //      var feed = await query.FirstOrDefaultAsync(u => u.Id.Equals(id));
+            return feed;
+        }
 
-        //     return feed;
-        // }
+        public async Task<FeedTwitter> GetFeedTwitter(int id)
+        {
+            var query = _context.FeedsTwitter.AsQueryable();
+            var feed = await query.FirstOrDefaultAsync(u => u.Id == id);
 
-        // public async Task<PagedList<Feed>> GetFeeds(FeedParams feedParams)
-        // {
-        //     var feeds = _context.Feeds.OrderByDescending(u => u.Name).AsQueryable();
+            return feed;
+        }
 
-        //     if (!string.IsNullOrEmpty(feedParams.OrderBy))
-        //     {
-        //         switch (feedParams.OrderBy)
-        //         {
-        //             case "created":
-        //             feeds = feeds.OrderByDescending(u => u.Created);
-        //             break;
-        //         }
-        //     }
+        public async Task<Grid> GetGrid(int id)
+        {
+            var query = _context.Grids.AsQueryable();
+            var grid = await query.FirstOrDefaultAsync(u => u.Id == id);
 
-        //     return await PagedList<Feed>.CreateAsync(feeds, feedParams.PageNumber, feedParams.PageSize);
-        // }
+            return grid;
+        }
 
+        public async Task<Column> GetColumn(int id)
+        {
+            var query = _context.Columns.AsQueryable();
+            var col = await query.FirstOrDefaultAsync(u => u.Id == id);
+
+            return col;
+        }
+
+        public async Task<IEnumerable<Grid>> LoadUserGrids(int userId)
+        {
+            var query = _context.Grids.AsQueryable();
+            var grids = await query.Where(u => u.UserId == userId).ToListAsync();
+
+            if (grids.Any())
+                return grids;
+
+            var newGrid = new Grid {
+                UserId = userId
+            };
+
+            await _context.SaveChangesAsync();
+
+            var newCol = new Column{
+                Grid = await _context.Grids.LastOrDefaultAsync(),
+            };
+
+            return await query.Where(u => u.UserId == userId).ToListAsync();            
+        }
+
+        public async Task<IEnumerable<FeedRss>> GetRssList()
+        {
+            var rssList = await _context.FeedsRss.ToListAsync();
+            return rssList;
+        }
     }
 }

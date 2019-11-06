@@ -8,7 +8,6 @@ using AutoMapper;
 using HungryCake.API.Data;
 using HungryCake.API.Helpers;
 using HungryCake.API.Models;
-using HungryCakeApp.API.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -41,42 +40,7 @@ namespace HungryCake.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<DataContext>(x => x.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
-
-            IdentityBuilder builder = services.AddIdentityCore<User>(opt =>
-            {
-                opt.Password.RequiredLength = 6;
-                opt.Password.RequireNonAlphanumeric = false;
-                opt.Password.RequireUppercase = false;
-            });
-
-            builder = new IdentityBuilder(builder.UserType, typeof(Role), builder.Services);
-            builder.AddEntityFrameworkStores<DataContext>();
-            builder.AddRoleValidator<RoleValidator<Role>>();
-            builder.AddRoleManager<RoleManager<Role>>();
-            builder.AddSignInManager<SignInManager<User>>();
-
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
-            {
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration.GetSection("AppSettings:Token").Value)),
-                    ValidateIssuer = false,
-                    ValidateAudience = false,
-                };
-            });
-
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("RequireAdminRole", policy => policy.RequireRole("Admin"));
-                options.AddPolicy("InsertCustomRSS", policy => policy.RequireRole("Admin", "PremiumUser"));
-            });
-
-            services.AddMvc(options =>
-                {
-                    var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
-                    options.Filters.Add(new AuthorizeFilter(policy));
-                })
+            services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
                 .AddJsonOptions(opt =>
                 {
@@ -92,13 +56,12 @@ namespace HungryCake.API
 
             services.AddCors();
             services.AddSingleton(mapper);
+            services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped<ICakeRepository, CakeRepository>();
-            services.AddScoped<LogUserActivity>();
-            services.AddTransient<Seed>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, Seed seeder)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -119,21 +82,10 @@ namespace HungryCake.API
                         }
                     });
                 });
-                // app.UseHsts();
             }
 
-            seeder.SeedUsers();
-            seeder.SeedCategory();
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             app.UseAuthentication();
-            // app.UseDefaultFiles();
-            // app.UseStaticFiles();
-            // app.UseMvc(routes => {
-            //     routes.MapSpaFallbackRoute(
-            //         name: "spa-fallback",
-            //         defaults: new { controller = "Fallback", action = "Index" }
-            //     );
-            // });
             app.UseMvc();
         }
     }

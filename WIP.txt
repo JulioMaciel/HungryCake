@@ -1,32 +1,34 @@
 
-TODO
-* página, lista todas categorias
-* ter opção para add
-* dá opção para editar nome, parent, etc
+* algoritmo:
+- ler somente uma vez e salvar na memoria:
+= max is once per day
+- elimina maior tempo intervalo de tempo e nao update lá (ex: between madrugadas)
+- faz avg time between each restante
+- schedule next service/event
 
-TODO
-* listar categorias na janela add rss
-* lá, tem que ter opção para adicionar nova, escrevendo o nome do pai
 
-TODO
-* add rss
-* api: le o valor quando cadastrado (ou iniciado o server) e guarda na memoria
-* user subscribe rss da memoria
-* api volta a ler o feed, se tiver update, disposable o antigo e add na memoria
-* show created rss e checa se atualiza a cada X minutos
+* edit
+column
+grid -> also when add user
+- edit grid puxa um panel que vem da direita
 
-TODO
-* btn preview content ao add rss
+* add / remove / edit / get
+filter
 
-TODO
-* ao criar user, criar userGrid default pra ele
-* page to user criar userColumn
-* show only rss signed by user
+* reading results
+html; reddit; rss; twitter
 
-TODO
-* usuario editar grid
-* user set novos userColumns para o grid
-* user edit config userColumn
+* filtering results
+html; reddit; rss; twitter
+
+* send column reading results
+
+
+* tentar trazer language do html (e salvar no DB)
+
+
+Create seeded guest user, with default grid and 3 columns.
+
 
 columnsview will always show the most especific signed, them the more generic minus the especifics
 - na real acho que nao da nada o mesmo feed aparecer duas vezes, problema do usuário, ele que tire
