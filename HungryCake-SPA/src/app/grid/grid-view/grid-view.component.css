@@ -1,0 +1,10 @@
+.grid-view {
+    background-color: #F9F9F9;
+}
+
+.grid-edit {
+    position: absolute;
+    top: 0%;
+    right: 0%;
+    background-color: white;
+}

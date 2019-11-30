@@ -21,7 +21,7 @@ namespace HungryCake.API.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("DateTimeFormat");
+                    b.Property<int>("ColumnPos");
 
                     b.Property<int>("GridId");
 
@@ -29,40 +29,17 @@ namespace HungryCake.API.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<bool>("ShowDateTime");
+                    b.Property<int>("RowPos");
 
-                    b.Property<bool>("ShowImage");
-
-                    b.Property<bool>("ShowRollbar");
+                    b.Property<bool>("ShowFeedIcon");
 
                     b.Property<bool>("ShowSummary");
-
-                    b.Property<int>("xPosition");
-
-                    b.Property<int>("yPosition");
 
                     b.HasKey("Id");
 
                     b.HasIndex("GridId");
 
                     b.ToTable("Columns");
-                });
-
-            modelBuilder.Entity("HungryCake.API.Models.ColumnHtml", b =>
-                {
-                    b.Property<int>("ColumnId");
-
-                    b.Property<int>("FeedHtmlId");
-
-                    b.Property<int>("FilterId");
-
-                    b.HasKey("ColumnId", "FeedHtmlId");
-
-                    b.HasIndex("FeedHtmlId");
-
-                    b.HasIndex("FilterId");
-
-                    b.ToTable("ColumnHtml");
                 });
 
             modelBuilder.Entity("HungryCake.API.Models.ColumnReddit", b =>
@@ -75,6 +52,8 @@ namespace HungryCake.API.Migrations
 
                     b.Property<int>("TopRange");
 
+                    b.Property<int>("Type");
+
                     b.HasKey("ColumnId", "FeedRedditId");
 
                     b.HasIndex("FeedRedditId");
@@ -84,6 +63,25 @@ namespace HungryCake.API.Migrations
                     b.ToTable("ColumnReddit");
                 });
 
+            modelBuilder.Entity("HungryCake.API.Models.ColumnRegex", b =>
+                {
+                    b.Property<int>("ColumnId");
+
+                    b.Property<int>("FeedRegexId");
+
+                    b.Property<int>("FilterId");
+
+                    b.Property<int>("Type");
+
+                    b.HasKey("ColumnId", "FeedRegexId");
+
+                    b.HasIndex("FeedRegexId");
+
+                    b.HasIndex("FilterId");
+
+                    b.ToTable("ColumnRegex");
+                });
+
             modelBuilder.Entity("HungryCake.API.Models.ColumnRss", b =>
                 {
                     b.Property<int>("ColumnId");
@@ -91,6 +89,8 @@ namespace HungryCake.API.Migrations
                     b.Property<int>("FeedRssId");
 
                     b.Property<int>("FilterId");
+
+                    b.Property<int>("Type");
 
                     b.HasKey("ColumnId", "FeedRssId");
 
@@ -109,6 +109,8 @@ namespace HungryCake.API.Migrations
 
                     b.Property<int>("FilterId");
 
+                    b.Property<int>("Type");
+
                     b.HasKey("ColumnId", "FeedTwitterId");
 
                     b.HasIndex("FeedTwitterId");
@@ -118,7 +120,33 @@ namespace HungryCake.API.Migrations
                     b.ToTable("ColumnTwitter");
                 });
 
-            modelBuilder.Entity("HungryCake.API.Models.FeedHtml", b =>
+            modelBuilder.Entity("HungryCake.API.Models.FeedReddit", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("Created");
+
+                    b.Property<byte[]>("Icon");
+
+                    b.Property<bool>("IsActive");
+
+                    b.Property<DateTime>("LastFail");
+
+                    b.Property<DateTime>("LastSuccess");
+
+                    b.Property<string>("UTCoffset");
+
+                    b.Property<int>("Users");
+
+                    b.Property<string>("reddit");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FeedsReddit");
+                });
+
+            modelBuilder.Entity("HungryCake.API.Models.FeedRegex", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -145,33 +173,13 @@ namespace HungryCake.API.Migrations
 
                     b.Property<string>("PatternTitle");
 
+                    b.Property<string>("UTCoffset");
+
                     b.Property<string>("UrlSite");
 
                     b.HasKey("Id");
 
                     b.ToTable("FeedsHtml");
-                });
-
-            modelBuilder.Entity("HungryCake.API.Models.FeedReddit", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime>("Created");
-
-                    b.Property<byte[]>("Icon");
-
-                    b.Property<bool>("IsActive");
-
-                    b.Property<DateTime>("LastFail");
-
-                    b.Property<DateTime>("LastSuccess");
-
-                    b.Property<string>("reddit");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("FeedsReddit");
                 });
 
             modelBuilder.Entity("HungryCake.API.Models.FeedRss", b =>
@@ -194,6 +202,8 @@ namespace HungryCake.API.Migrations
                     b.Property<DateTime>("LastSuccess");
 
                     b.Property<string>("Name");
+
+                    b.Property<string>("UTCoffset");
 
                     b.Property<string>("UrlRss");
 
@@ -220,6 +230,8 @@ namespace HungryCake.API.Migrations
                     b.Property<DateTime>("LastSuccess");
 
                     b.Property<string>("Twitter");
+
+                    b.Property<string>("UTCoffset");
 
                     b.HasKey("Id");
 
@@ -285,6 +297,8 @@ namespace HungryCake.API.Migrations
 
                     b.Property<byte[]>("PasswordSalt");
 
+                    b.Property<string>("UTCoffset");
+
                     b.HasKey("Id");
 
                     b.ToTable("Users");
@@ -298,24 +312,6 @@ namespace HungryCake.API.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("HungryCake.API.Models.ColumnHtml", b =>
-                {
-                    b.HasOne("HungryCake.API.Models.Column", "Column")
-                        .WithMany("FeedsHtml")
-                        .HasForeignKey("ColumnId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("HungryCake.API.Models.FeedHtml", "FeedHtml")
-                        .WithMany("ColumnsHtml")
-                        .HasForeignKey("FeedHtmlId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("HungryCake.API.Models.Filter", "Filter")
-                        .WithMany()
-                        .HasForeignKey("FilterId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
             modelBuilder.Entity("HungryCake.API.Models.ColumnReddit", b =>
                 {
                     b.HasOne("HungryCake.API.Models.Column", "Column")
@@ -326,6 +322,24 @@ namespace HungryCake.API.Migrations
                     b.HasOne("HungryCake.API.Models.FeedReddit", "FeedReddit")
                         .WithMany("ColumnsReddit")
                         .HasForeignKey("FeedRedditId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("HungryCake.API.Models.Filter", "Filter")
+                        .WithMany()
+                        .HasForeignKey("FilterId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("HungryCake.API.Models.ColumnRegex", b =>
+                {
+                    b.HasOne("HungryCake.API.Models.Column", "Column")
+                        .WithMany("FeedsRegex")
+                        .HasForeignKey("ColumnId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("HungryCake.API.Models.FeedRegex", "FeedRegex")
+                        .WithMany("ColumnsRegex")
+                        .HasForeignKey("FeedRegexId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("HungryCake.API.Models.Filter", "Filter")
@@ -381,7 +395,7 @@ namespace HungryCake.API.Migrations
             modelBuilder.Entity("HungryCake.API.Models.Grid", b =>
                 {
                     b.HasOne("HungryCake.API.Models.User", "User")
-                        .WithMany()
+                        .WithMany("Grids")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

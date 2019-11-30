@@ -1,3 +1,86 @@
-<p>
-  grid-add-edit works!
-</p>
+<form [formGroup]="gridForm" (ngSubmit)="onSave()">
+
+  <div class="form-group row">
+    <label class="col-4 col-form-label">Grid Name</label>
+    <div class="col-8">
+      <input type="text" class="form-control" placeholder="Name" 
+      formControlName="name" 
+      [ngClass]="{ 'is-invalid': gridForm.get('name').errors && gridForm.get('name').touched }" />
+      <div class="invalid-feedback">Grid name required</div>
+      <!-- <div class="invalid-feedback" *ngIf="gridForm.get('name').hasError('minlength') && gridForm.get('password').touched">Password must be larger than 3 characters</div>
+      <div class="invalid-feedback" *ngIf="gridForm.get('name').hasError('maxlength') && gridForm.get('password').touched">Password must be smaller than 13 characters</div> -->
+    </div>
+  </div>
+
+  <div class="form-group row align-items-center">
+    <label class="col-4 col-form-label">Columns</label>
+    <div class="row col-8 align-items-center">
+      <div class="col-2 col-form-label">
+        <span>{{slcolumns.value}}</span>
+      </div>
+      <div class="col-10 nohorizontalpadding">
+        <mat-slider  #slcolumns min="1" max="6" tickInterval="1" step="1" ></mat-slider>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group row align-items-center">
+    <label class="col-4 col-form-label">Rows</label>
+    <div class="row col-8 align-items-center">
+      <div class="col-2 col-form-label">
+        <span>{{slrows.value}}</span>
+      </div>
+      <div class="col-10 nohorizontalpadding">
+        <mat-slider #slrows min="1" max="3" tickInterval="1" step="1" ></mat-slider>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group row align-items-center mb-0">
+    <label class="col-4 col-form-label">Font Size</label>
+    <div class="row col-8 align-items-center">
+      <div class="col-2 col-form-label">
+        <span>{{slfont.value}}</span>
+      </div>
+      <div class="col-10 nohorizontalpadding">
+        <mat-slider #slfont min="10" max="18" tickInterval="2" step="2" ></mat-slider>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group row align-items-center">
+    <label class="col-4 col-form-label">Template</label>
+    <div class="col-8">
+      <mat-form-field>
+        <!-- <mat-label>Select an option</mat-label> -->
+        <!-- [(value)]="selected" -->
+        <mat-select >
+          <mat-option value="0">Orange</mat-option>
+          <mat-option value="1">Dark</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="form-group row d-flex flex-row m-1 mb-3">
+
+    <div class="d-flex flex-column flex-fill mr-1">
+      <button type="button" class="btn btn-info" (click)="onReset()">
+        <i class="fa fa-repeat mr-1"></i>Reset</button>
+      <button class="btn btn-danger mt-1" type="button" (click)="onRemove()">
+        <i class="fa fa-times mr-1"></i>Remove</button>
+    </div>
+
+    <div class="d-flex flex-column flex-fill">
+      <button type="submit" [disabled]="gridForm.invalid" 
+        class="btn btn-success">
+        <i class="fa fa-check mr-1"></i>Save</button>
+      <button class="btn btn-light mt-1" type="button" (click)="onClose()">
+        <i class="fa fa-arrow-right mr-1"></i>Close</button>
+    </div>
+
+  </div>
+
+</form>
+
+<!-- WIP: Add Duplicate button -->

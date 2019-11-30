@@ -167,5 +167,20 @@ namespace HungryCake.API.Controllers
             return Ok(response);
         }
 
+        // [HttpPost("filter/add")] // add and edit via Feed
+        // public async Task<IActionResult> AddFilter(FilterAddDto dto)
+        // {
+        //     var filterToCreate = _mapper.Map<Filter>(dto);
+
+        //     _repo.Add<Filter>(filterToCreate);
+
+        //     if (await _repo.SaveAll())
+        //     {
+        //         return Ok();
+        //     }
+
+        //     throw new Exception("Creating the filter failed on save");
+        // }
+
     }
 }

@@ -1,3 +1,78 @@
-.btnLogout {
+.navbar {
+    background-color: rgba(236, 125, 0);
+    color: white;
+}
+
+.navbar a {
+    color: white;
+}
+
+/* .navbar a:hover {
+    color: rgb(245, 224, 201);
+} */
+
+a > i,span {
     cursor: pointer
+}
+
+ol, ul {
+    list-style: none;
+}
+li {
+    display: inline-block;
+    /* padding: 20px 0 20px; */
+    vertical-align: middle;
+}
+a:hover, a:focus, a:active {
+    /* color: #999; */
+    text-decoration: none;
+}
+a {
+    text-decoration: none;
+    transition: color 0.1s, background-color 0.1s;
+}
+a {
+    position: relative;
+    display: block;
+    line-height: 16px;
+    transition: color 0.1s,background-color 0.1s,padding 0.2s ease-in;
+    /* color: #000; */
+}
+a::before {
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: 3px;
+    left: 0;
+    height: 3px;
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+    transform-origin: right top;
+    transform: scale(0, 1);
+    transition: color 0.1s,transform 0.3s ease-out;
+    border-radius: 50%;
+}
+a:active::before {
+    background-color: rgb(255, 255, 255);
+}
+a:hover::before, a:focus::before {
+    transform-origin: left top;
+    transform: scale(1, 1);
+}
+/* 
+.active {
+    display: inline-block;
+    background-color: rgb(255, 255, 255);
+    display: block;
+    position: absolute;
+    bottom: 3px;
+    height: 3px;
+    width: 100%;
+} */
+
+.active a {
+    border-radius: 50%;
+    background-color: white;
+    color: rgba(236, 125, 0);
+    font-weight: bold;
 }

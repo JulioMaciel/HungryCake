@@ -1,4 +1,20 @@
 
+sem drag and drop...
+mouseover um feed, mostra colunas em form de botoes onde ele pode ser incluso...
+also, sem mostra a coluna que está no momento
+
+-------------
+
+modificar o componente de listar templates para cada coluna do grid do usuário
+poder receber (drag-drop) um rss
+
+fixo: em cima mostrar as colunas com os feeds que possui, do grid selecionado via dropdown; expandível pra baixo
+fixo: top-left filtros (string, com checkbox pra filtrar por descricao, titulo), checkboxes por tipo
+fixo: right componente insert new, separando o tipo por abas
+scrollable: list at down
+
+
+
 * algoritmo:
 - ler somente uma vez e salvar na memoria:
 = max is once per day
@@ -6,20 +22,6 @@
 - faz avg time between each restante
 - schedule next service/event
 
-
-* edit
-column
-grid -> also when add user
-- edit grid puxa um panel que vem da direita
-
-* add / remove / edit / get
-filter
-
-* reading results
-html; reddit; rss; twitter
-
-* filtering results
-html; reddit; rss; twitter
 
 * send column reading results
 

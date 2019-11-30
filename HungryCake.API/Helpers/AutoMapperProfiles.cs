@@ -15,14 +15,15 @@ namespace HungryCake.API.Helpers
             CreateMap<User, UserListDto>();
             CreateMap<User, UserDetailDto>();
 
+            CreateMap<GridAddDto, Grid>();
+            CreateMap<GridEditDto, Grid>();
+
+            CreateMap<ColumnAddDto, Column>();
+            CreateMap<ColumnEditDto, Column>();
+
             CreateMap<FeedRssAddDto, FeedRss>();
-                // .ForMember(dest => dest.Icon, opt => {
-                //     opt.MapFrom(src => File.ReadAllBytes(src.NewIconPath));
-                // });
             CreateMap<FeedRssEditDto, FeedRss>();
-                // .ForMember(dest => dest.Icon, opt => {
-                //     opt.MapFrom(src => File.ReadAllBytes(src.NewIconPath));
-                // });;        
+                
         }
     }
 }

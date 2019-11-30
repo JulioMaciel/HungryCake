@@ -22,11 +22,13 @@ namespace HungryCake.API.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IAuthRepository _repo;
+        private readonly ICakeRepository _cakeRepo;
         private readonly IConfiguration _config;
-        public AuthController(IAuthRepository repo, IConfiguration config)
+        public AuthController(IAuthRepository repo, IConfiguration config, ICakeRepository cakeRepo)
         {
             _config = config;
             _repo = repo;
+            _cakeRepo = cakeRepo;
         }
 
         [HttpPost("register")]
@@ -75,9 +77,19 @@ namespace HungryCake.API.Controllers
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
+            var userGrids = await _cakeRepo.GetUserGrids(userFromRepo.Id);
+            var userGridsDto = new List<GridLogin>();
+            
+            foreach (var grid in userGrids) 
+            {
+                var dto = new GridLogin(grid.Id, grid.Name);
+                userGridsDto.Add(dto);
+            }
+
             return Ok(new {
                 token = tokenHandler.WriteToken(token),
-                user = userFromRepo
+                user = userFromRepo,
+                userGrids = userGridsDto
             });
         }
     }

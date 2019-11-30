@@ -8,6 +8,8 @@ import { map } from 'rxjs/operators';
 import { FeedRss } from '../_models/feeds/feedRss';
 import { RssItem } from '../_models/feeds/items/rssItem';
 import { Feed } from '../_models/feeds/feed';
+import { Filter } from '../_models/filter';
+import { Column } from '../_models/column';
 
 @Injectable({
   providedIn: 'root'
@@ -47,5 +49,13 @@ export class FeedService {
     const params = new HttpParams().append('url', url);
     return this.http.get(this.baseUrl + 'rss/icon', { params });
   }
+
+  // addFilter(filter: Filter) {
+  //   return this.http.post(this.baseUrl + 'filter/add', filter);
+  // }
+
+  // updateFilter(filter: Filter) {
+  //   return this.http.put(this.baseUrl + 'filter/' + filter.id, filter);
+  // }
 
 }

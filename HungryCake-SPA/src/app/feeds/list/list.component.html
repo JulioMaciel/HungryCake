@@ -1,0 +1,107 @@
+<!-- whole list-filter-add frame -->
+<div class="row mt-2 bg-light nohorizontalpadding h-100">
+
+  <!-- left -->
+  <div class="col-8 nohorizontalpadding">
+
+    <!-- top fixed -->
+    <div class="d-flex flex-column">
+
+      <!-- top-left dropdown grid & filter -->
+      <div class="d-flex align-items-center border-bottom pb-1">
+        <select class="form-control col-2 ml-1" name="status">
+          <option *ngFor="let grid of userGrids" [value]="grid.id" [selected]="selectedGrid">{{grid.name}}</option>
+        </select>
+        <input type="text" class="form-control col-3 ml-1" placeholder="Filter..." />
+        <div class="form-check col ml-1">
+          <input class="form-check-input" type="checkbox" />
+          <label class="form-check-label"> Description </label>
+        </div>
+        <div class="form-check col">
+          <input class="form-check-input" type="checkbox" />
+          <label class="form-check-label"> Actives </label>
+        </div>
+        <div class="form-check col">
+          <input class="form-check-input" type="checkbox" />
+          <label class="form-check-label"> RSS </label>
+        </div>
+        <div class="form-check col">
+          <input class="form-check-input" type="checkbox" />
+          <label class="form-check-label"> Reddit </label>
+        </div>
+        <div class="form-check col">
+          <input class="form-check-input" type="checkbox" />
+          <label class="form-check-label"> Twitter </label>
+        </div>
+        <div class="form-check col">
+          <input class="form-check-input" type="checkbox" />
+          <label class="form-check-label"> Regex </label>
+        </div>
+      </div>
+
+      <!-- top-center columns selected grid -->  
+      <div class="d-flex flex-column w-100"> <!-- frame das rows -->
+        <div *ngFor="let nRow of [].constructor(selectedGrid?.quantRows); let ri = index;"
+          class="flex-fill d-flex flex-row"> <!-- row -->
+        <!-- row {{r+1}} -->
+        <div *ngFor="let nCol of [].constructor(selectedGrid?.quantColumns); let ci = index;" 
+          class="flex-fill"> <!-- column -->
+          <!-- column {{c+1}} -->
+          <app-column-add row="ri" col="ci"></app-column-add>
+          <!-- [col]="selectedGrid.columns.filter(x => x.rowPos == 1)" -->
+          <!-- [col]="selectedGrid?.columns[0]" -->
+        </div>
+        </div>
+      </div>
+
+    </div>
+
+  <!-- bottom-left list fees -->
+    <div>
+      <div *ngFor="let rss of rssList" class="list-group">
+        <div class="list-group-item feedListRss rounded-0">
+          <h4 class="">
+            <img *ngIf="rss.icon" [src]="'data:image/jpeg;base64,' + rss.icon"
+              width="24px" height="24px"/>
+            <a class="ml-3" href="{{ rss.urlSite }}">{{ rss.name }}</a>
+            <a class="ml-3" href="{{ rss.urlRss }}"><i class="fa fa-rss"></i></a>
+            <a class="ml-3" href="/rss/edit/{{ rss.id }}"><i class="fa fa-cogs"></i></a>
+          </h4>
+          <div class="feedDesc">{{ rss.description }}</div>
+        </div>
+      </div>
+
+      <p *ngIf="rssList.length === 0">There is no feeds rss at the moment.</p>
+      
+    </div>
+
+  </div>
+  
+
+  <!-- right add tabs -->
+  <div class="col-4 border border-left-1 bg-white">
+    <!-- <div class="alert alert-info font-weight-light text-center mb-5">
+      Insert or edit
+    </div> -->
+    <tabset >
+      <tab>
+        <ng-template tabHeading><div style="color:#eb6e14">RSS</div></ng-template>
+        <app-rss-add-edit></app-rss-add-edit>
+      </tab>
+      <tab>
+        <ng-template tabHeading><div style="color:#1a66ff">Twitter</div></ng-template>
+        Twitter content
+      </tab>
+      <tab>
+        <ng-template tabHeading><div style="color:#cc4400">Reddit</div></ng-template>
+        Reddit content
+      </tab>
+      <tab>
+        <ng-template tabHeading><div style="color:#171a1c">Regex</div></ng-template>  
+        Regex content
+      </tab>
+    </tabset>
+
+  </div>
+
+</div>

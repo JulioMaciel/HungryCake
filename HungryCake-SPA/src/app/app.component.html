@@ -1,3 +1,17 @@
-<app-nav></app-nav>
+<app-nav (changeGridConfig)="updateGridConfigVisibility($event)"></app-nav>
+<!--  -->
+
+<!-- <div class="row mt-1 nohorizontalpadding"> -->
+
+<!-- <div [ngClass]="showGridConfig ? 'col-9' : 'col-12'">
+    <router-outlet></router-outlet>
+</div> -->
 
 <router-outlet></router-outlet>
+<!-- (showGridConfig)="changeGridConfigVisibility($event)" -->
+
+<!-- <div *ngIf="showGridConfig" class="col-3 shadow">
+    <app-grid-edit></app-grid-edit>
+</div> -->
+
+<!-- </div> -->

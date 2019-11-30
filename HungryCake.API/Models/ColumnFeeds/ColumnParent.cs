@@ -8,5 +8,6 @@ namespace HungryCake.API.Models
         public int ColumnId { get; set; }
         public Filter Filter { get; set; }
         public int FilterId { get; set; }
+        public FeedType Type { get; set; }
     }
 }

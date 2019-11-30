@@ -11,7 +11,7 @@ namespace HungryCake.API.Data
         public DbSet<Column> Columns { get; set; }
         public DbSet<Grid> Grids { get; set; }
         public DbSet<FeedRss> FeedsRss { get; set; }
-        public DbSet<FeedHtml> FeedsHtml { get; set; }
+        public DbSet<FeedRegex> FeedsHtml { get; set; }
         public DbSet<FeedReddit> FeedsReddit { get; set; }
         public DbSet<FeedTwitter> FeedsTwitter { get; set; }
 
@@ -23,18 +23,18 @@ namespace HungryCake.API.Data
                 .HasForeignKey(c => c.GridId);
 
 
-            builder.Entity<ColumnHtml>()
-                .HasKey(ch => new { ch.ColumnId, ch.FeedHtmlId });
+            builder.Entity<ColumnRegex>()
+                .HasKey(ch => new { ch.ColumnId, ch.FeedRegexId });
 
-            builder.Entity<ColumnHtml>()
+            builder.Entity<ColumnRegex>()
                 .HasOne(ch => ch.Column)
-                .WithMany(c => c.FeedsHtml)
+                .WithMany(c => c.FeedsRegex)
                 .HasForeignKey(ch => ch.ColumnId);
 
-            builder.Entity<ColumnHtml>()
-                .HasOne(ch => ch.FeedHtml)
-                .WithMany(f => f.ColumnsHtml)
-                .HasForeignKey(ch => ch.FeedHtmlId);
+            builder.Entity<ColumnRegex>()
+                .HasOne(ch => ch.FeedRegex)
+                .WithMany(f => f.ColumnsRegex)
+                .HasForeignKey(ch => ch.FeedRegexId);
 
 
             builder.Entity<ColumnRss>()

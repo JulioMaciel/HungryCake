@@ -51,7 +51,7 @@ namespace HungryCake.API.Data
             return rss;
         }
 
-        public async Task<FeedHtml> GetFeedHtml(int id)
+        public async Task<FeedRegex> GetFeedHtml(int id)
         {
             var query = _context.FeedsHtml.AsQueryable();
             var feed = await query.FirstOrDefaultAsync(u => u.Id == id);
@@ -91,31 +91,43 @@ namespace HungryCake.API.Data
             return col;
         }
 
-        public async Task<IEnumerable<Grid>> LoadUserGrids(int userId)
-        {
-            var query = _context.Grids.AsQueryable();
-            var grids = await query.Where(u => u.UserId == userId).ToListAsync();
+        // public async Task<IEnumerable<Grid>> LoadUserGrids(int userId)
+        // {
+        //     var query = _context.Grids.AsQueryable();
+        //     var grids = await query.Where(u => u.UserId == userId).ToListAsync();
 
-            if (grids.Any())
-                return grids;
+        //     if (grids.Any())
+        //         return grids;
 
-            var newGrid = new Grid {
-                UserId = userId
-            };
+        //     // var newGrid = new Grid {
+        //     //     UserId = userId
+        //     // };
 
-            await _context.SaveChangesAsync();
+        //     // await _context.SaveChangesAsync();
 
-            var newCol = new Column{
-                Grid = await _context.Grids.LastOrDefaultAsync(),
-            };
+        //     // var newCol = new Column{
+        //     //     Grid = await _context.Grids.LastOrDefaultAsync(),
+        //     // };
 
-            return await query.Where(u => u.UserId == userId).ToListAsync();            
-        }
+        //     return await query.Where(u => u.UserId == userId).ToListAsync();            
+        // }
 
         public async Task<IEnumerable<FeedRss>> GetRssList()
         {
             var rssList = await _context.FeedsRss.ToListAsync();
             return rssList;
+        }
+
+        public async Task<IEnumerable<Grid>> GetUserGrids(int userId)
+        {
+            var userGrids = await _context.Grids.Where(g => g.UserId == userId).ToListAsync();
+            return userGrids;
+        }
+
+        public async Task<IEnumerable<Column>> GetColumnsFromGrid(int gridId)
+        {
+            var gridCols = await _context.Columns.Where(c => c.GridId == gridId).ToListAsync();
+            return gridCols;
         }
     }
 }

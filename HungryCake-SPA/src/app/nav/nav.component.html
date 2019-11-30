@@ -1,22 +1,29 @@
-<nav class="navbar navbar-expand-md navbar-dark bg-primary">
+<nav class="navbar navbar-expand-md">
   <div class="container">
   <a class="navbar-brand" [routerLink]="['/home']">The Cake</a>
     
     <ul *ngIf="loggedIn()" class="navbar-nav mr-auto">
-      <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link" [routerLink]="['/feeds']" >Feeds</a>
-      </li>
-      <li class="nav-item" routerLinkActive="active">
+      <!-- <li class="nav-item" routerLinkActive="active">
         <a class="nav-link" [routerLink]="['/rss/add']">Add RSS</a>
-      </li>
+      </li> -->
       <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link" [routerLink]="['/rss/list']">Feeds RSS</a>
+        <a class="nav-link" [routerLink]="['/feeds']">Feeds</a>
       </li>
-      <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link" [routerLink]="['/grid/add']">Add Grid</a>
-      </li>
-      <li class="nav-item" routerLinkActive="active">
+      <!-- <li class="nav-item" routerLinkActive="active">
         <a class="nav-link" [routerLink]="['/column/add']">Add Column</a>
+      </li> -->
+      <div *ngFor="let grid of this.userGrids">
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link" [routerLink]="['grid', grid.id]">{{grid.name}}</a>
+        </li>
+      </div>
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link " (click)="setGridConfigVisibility()">
+          <i class="fa fa-cogs"></i>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" (click)="onAddGrid()"><i class="fa fa-plus"></i></a>
       </li>
     </ul>
 
@@ -24,7 +31,7 @@
   </div>
   <ul *ngIf="loggedIn()" class="navbar-nav mr-auto float-right">
     <li class="nav-item" routerLinkActive="active">
-      <a class="nav-link btnLogout" (click)="logout()"><i class="fa fa-sign-out"></i> Logout</a>
+      <a class="nav-link btnLogout" (click)="logout()"><i class="fa fa-sign-out"></i><span> Logout</span></a>
     </li>
   </ul>
 

@@ -23,7 +23,8 @@ export class HomeComponent implements OnInit {
     }, error => {
       this.alertify.error(error);
     }, () => {
-      this.router.navigate(['/main']);
+      const firstUserGrid = this.authService.currentUser.grids[0];
+      this.router.navigate(['/grid/' + firstUserGrid.id]);
     });
   }
 

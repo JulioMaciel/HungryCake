@@ -21,6 +21,8 @@ namespace HungryCake.API.Data
             if (user == null)
                 return null;
 
+            // user.Grids = await _context.Grids.Where(g => g.UserId == user.Id).ToListAsync();
+
             return user;
         }
 
@@ -28,6 +30,10 @@ namespace HungryCake.API.Data
         {
             await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();
+
+            // var grid = new Grid(user.Id);
+            // await _context.Grids.AddAsync(grid);
+            // await _context.SaveChangesAsync();
 
             return user;
         }

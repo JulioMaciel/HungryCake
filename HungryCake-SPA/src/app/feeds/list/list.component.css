@@ -1,0 +1,36 @@
+h4 a {
+    color: #ec7d00;
+}
+
+h4 a:hover {
+    color: #c86a00;
+}
+
+.feedDesc {
+    color: #555;
+}
+
+.feedListRss {
+    background: rgb(255,255,255);
+    background: linear-gradient(90deg, rgba(255,255,255,1) 50%, rgba(239,139,67,1) 100%);
+}
+
+.feedListReddit {
+    background: rgb(255,255,255);
+    background: linear-gradient(90deg, rgba(255,255,255,1) 50%, rgba(255,87,0,1) 100%);
+}
+
+.feedListTwitter {
+    background: rgb(255,255,255);
+    background: linear-gradient(90deg, rgba(255,255,255,1) 50%, rgba(102,153,255,1) 100%);
+}
+
+.feedListRegex {
+    background: rgb(255,255,255);
+    background: linear-gradient(90deg, rgba(255,255,255,1) 50%, rgba(52,58,64,1) 100%);
+}
+
+.feedListRss {
+    border-left: 0;
+    border-right: 0;
+}

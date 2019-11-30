@@ -1,10 +1,10 @@
 namespace HungryCake.API.Helpers
 {
-    // public enum FeedType
-    // {
-    //     Rss,
-    //     Html,
-    //     Reddit,
-    //     Twitter
-    // }
+    public enum FeedType
+    {
+        Rss,
+        Reddit,
+        Twitter,
+        Regex,
+    }
 }

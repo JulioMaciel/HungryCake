@@ -15,5 +15,6 @@ namespace HungryCake.API.Models
         public DateTime LastFail { get; set; }
         public byte[] Icon { get; set; }
         public bool IsActive { get; set; }
+        public string UTCoffset { get; set; }
     }
 }

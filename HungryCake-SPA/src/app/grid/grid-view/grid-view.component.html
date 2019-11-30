@@ -1,3 +1,28 @@
-<p>
-  grid-view works!
-</p>
+<div class="grid-view h-100">
+
+<div class="row nohorizontalpadding" style="position:relative">
+
+  <app-column-rss-view
+    *ngFor="let col of grid.columns"
+    [column]="col"
+    class="col br-light">
+  </app-column-rss-view>
+
+  <!-- <app-column-add *ngIf="grid.columns.length < 1" class="mw-50 bg-light align-self-center">    
+  </app-column-add> -->
+
+  <app-column-add *ngFor="let emptyList of [].constructor(emptyColumns)"
+    class="col bg-light">    
+  </app-column-add>
+
+  <!-- <div *ngIf="grid.columns.length < 1" class="col text-center bg-danger align-self-center">col 2</div>
+  <div *ngIf="grid.columns.length < 1" class="col text-center bg-dark">col 3</div>
+  <div *ngIf="grid.columns.length < 1" class="col text-center bg-danger">col 4</div> -->
+
+  <div *ngIf="showConfig" class="grid-edit shadow col-3 pt-2">
+    <app-grid-edit [grid]="grid"></app-grid-edit>
+  </div>
+
+</div>
+
+</div>

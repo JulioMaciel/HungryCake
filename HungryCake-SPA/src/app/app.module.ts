@@ -12,6 +12,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TimeAgoPipe } from 'time-ago-pipe';
 import { ErrorInterceptorProvider } from './_services/error.interceptor';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+// import {  } from '@angular/material/';
 
 import { AuthGuard } from './_guards/auth.guard';
 import { UserService } from './_services/user.service';
@@ -20,6 +24,7 @@ import { AlertifyService } from './_services/alertify.service';
 import { HasLevelDirective } from './_directives/hasLevel.directive';
 import { RssEditResolver } from './_resolvers/rss-edit.resolver';
 import { RssListResolver } from './_resolvers/rss-list.resolver';
+import { GridViewResolver } from './_resolvers/grid-view.resolver';
 
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
@@ -27,10 +32,12 @@ import { HomeComponent } from './home/home.component';
 import { UserAddComponent } from './users/user-add/user-add.component';
 import { GridViewComponent } from './grid/grid-view/grid-view.component';
 import { GridEditComponent } from './grid/grid-edit/grid-edit.component';
-import { ColumnViewComponent } from './column/column-view/column-view.component';
-import { ColumnEditComponent } from './column/column-edit/column-edit.component';
-import { RssListComponent } from './feeds/rss/rss-list/rss-list.component';
-import { RssAddEditComponent } from './feeds/rss/rss-add-edit/rss-add-edit.component';
+import { ListComponent } from './feeds/list/list.component';
+import { ColumnAddComponent } from './column/column-add/column-add.component';
+import { ColumnRssViewComponent } from './column/column-rss-view/column-rss-view.component';
+import { ColumnRssEditComponent } from './column/column-rss-edit/column-rss-edit.component';
+import { RssAddEditComponent } from './feeds/rss-add-edit/rss-add-edit.component';
+
 
 export function tokenGetter() {
    return localStorage.getItem('token');
@@ -46,9 +53,10 @@ export function tokenGetter() {
       UserAddComponent,
       GridViewComponent,
       GridEditComponent,
-      ColumnViewComponent,
-      ColumnEditComponent,
-      RssListComponent,
+      ColumnAddComponent,
+      ColumnRssViewComponent,
+      ColumnRssEditComponent,
+      ListComponent,
       RssAddEditComponent,
    ],
    imports: [
@@ -60,6 +68,9 @@ export function tokenGetter() {
       OverlayModule,
       BrowserAnimationsModule,
       NgbModule,
+      MatSliderModule,
+      MatFormFieldModule,
+      MatSelectModule,
       BsDropdownModule.forRoot(),
       PaginationModule.forRoot(),
       TabsModule.forRoot(),
@@ -74,6 +85,11 @@ export function tokenGetter() {
          }
       })
    ],
+   exports: [
+      MatSliderModule,
+      MatFormFieldModule,
+      MatSelectModule
+   ],
    entryComponents: [
       // RolesModalComponent
    ],
@@ -84,7 +100,8 @@ export function tokenGetter() {
       UserService,
       AlertifyService,
       RssEditResolver,
-      RssListResolver
+      RssListResolver,
+      GridViewResolver
    ],
    bootstrap: [
       AppComponent

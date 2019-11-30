@@ -11,17 +11,18 @@ namespace HungryCake.API.Models
         public Grid Grid { get; set; }
         public int GridId { get; set; }
         public string Name { get; set; } = "Untitled Column";
-        public IEnumerable<ColumnHtml> FeedsHtml { get; set; }
+        public IEnumerable<ColumnRegex> FeedsRegex { get; set; }
         public IEnumerable<ColumnReddit> FeedsReddit { get; set; }
         public IEnumerable<ColumnRss> FeedsRss { get; set; }
         public IEnumerable<ColumnTwitter> FeedsTwitter { get; set; }
-        public int xPosition { get; set; } = 1;
-        public int yPosition { get; set; } = 1;
+        public int RowPos { get; set; } = 1;
+        public int ColumnPos { get; set; } = 1;
         public int MaxItems { get; set; } = 50;
-        public bool ShowRollbar { get; set; } = false;
-        public bool ShowImage { get; set; } = false;
+        // public bool ShowRollbar { get; set; } = false;
+        // public bool ShowImage { get; set; } = false;
         public bool ShowSummary { get; set; } = false;
-        public bool ShowDateTime { get; set; } = false;
-        public string DateTimeFormat { get; set; } = "dd/mm/yy hh:MM:ss";
+        // public bool ShowDateTime { get; set; } = false;
+        // public string DateTimeFormat { get; set; } = "dd/mm/yy hh:MM:ss";
+        public bool ShowFeedIcon { get; set; } = true;
     }
 }

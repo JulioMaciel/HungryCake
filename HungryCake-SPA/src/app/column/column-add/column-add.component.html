@@ -1,0 +1,32 @@
+  <div class="frame p-2">
+
+  <div class="d-flex flex-column justify-content-around align-items-center" *ngIf="showAddType == 0">
+
+    <div class="alert alert-info font-weight-light text-center ml-2 mr-2">
+      Select the type to create a new column.
+    </div>
+
+    <input type="text" class="form-control mb-3" placeholder="Column name" />
+
+    <div class="d-flex justify-content-around mr-1 ml-1 w-100">
+        <button class="btn btn-rss" title="RSS" (click)="onAddRss()"
+          data-placement="right"><i class="fa fa-rss-square"></i></button>
+        <button class="btn btn-twitter" title="Twitter" 
+          data-placement="right"><i class="fa fa-twitter-square"></i></button>
+        <button class="btn btn-reddit" title="Reddit" 
+          data-placement="right"><i class="fa fa-reddit-alien"></i></button>
+        <button class="btn btn-regex" title="Regex (Advanced)" 
+          data-placement="right"><i class="fa fa-hashtag"></i></button>
+    </div>
+
+  </div>
+
+  <!-- <app-column-rss-edit *ngIf="showAddType == 1"></app-column-rss-edit> -->
+  <div class="frame-rss" *ngIf="showAddType == 1 && col?.feedsRss?.length == 0">
+      <!-- *ngIf="col?.feedsRss?.length == 0" -->
+    <div  class="alert alert-info font-weight-light text-center ml-2 mr-2">
+      This RSS column is empty. Drag feeds from the list and drag here.
+    </div>
+  </div>
+
+</div>
